@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Wrapper from './wrapper.js';
+import style from "./style.css";
+import Header from "./header.js";
+import Game from "./game.js";
 import background from "./gameBackground.jpg";
 
 /* Directly adding react element */
@@ -9,8 +11,14 @@ import background from "./gameBackground.jpg";
 //     document.getElementById("root")
 // );
 
-const App = () => (
-    <Wrapper />
-);
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const Wrapper = () => {
+    return (
+    <div className="wrapper">
+        <Header />
+        <Game />
+    </div>
+        );
+    };
+
+export default Wrapper;
