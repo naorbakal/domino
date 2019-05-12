@@ -57,7 +57,6 @@ h1{
 }
 
 .bcc135 {
-
     width: 0.7em;
     height: 0.7em;
     position: absolute;
@@ -71,82 +70,129 @@ h1{
     width: 0.7em;
     height: 0.7em;
     position: absolute;
-    top: 2.1em;
+    top: 1.9em;
     left: 1.7em;
     border-radius: 50%;
     background-color: black;
 }
 
-
-.tl456 {
-    width: 1.2em;
-    height: 1.2em;
+.bbl23456 {
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 6.4em;
-    left: 1.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 6.7em;
+    left: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
-.cl6 {
-    width: 1.2em;
-    height: 1.2em;
+.ttl456 {
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 8.0em;
-    left: 1.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 0.9em;
+    left: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
-.bl23456 {
-    width: 1.2em;
-    height: 1.2em;
+.bcl6 {
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 9.6em;
-    left: 1.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 5.7em;
+    left: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
-.tr23456 {
-    width: 1.2em;
-    height: 1.2em;
+.tcl6 {
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 6.4em;
-    left: 4.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 1.9em;
+    left: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
-.cr6 {
-    width: 1.2em;
-    height: 1.2em;
+.btl456{
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 8.0em;
-    left: 4.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 4.7em;
+    left: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
-.br456 {
-    width: 1.2em;
-    height: 1.2em;
+.tbl23456 {
+    width: 0.7em;
+    height: 0.7em;
     position: absolute;
-    top: 9.6em;
-    left: 4.0em;
-    -webkit-border-radius: 4em;
-    -moz-border-radius: 4em;
-    border-radius: 4em;
+    top: 3.0em;
+    left: .7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.btr23456 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 4.7em;
+    right: .7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.ttr23456 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 0.9em;
+    right: .7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.bcr6 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 1.9em;
+    right: .7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.tcr6 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 5.7em;
+    right: 0.7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.bbr456 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 6.7em;
+    right: .7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.tbr456 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 3.0em;
+    right: .7em;
+    border-radius: 50%;
     background-color: black;
 }
 
