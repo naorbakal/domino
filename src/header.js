@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Wrapper from './wrapper.js';
-import background from "./gameBackground.jpg";
+import style from "./style.css";
+
 
 /* Directly adding react element */
 // ReactDOM.render(
@@ -9,8 +9,13 @@ import background from "./gameBackground.jpg";
 //     document.getElementById("root")
 // );
 
-const App = () => (
-    <Wrapper />
-);
+const Header = () => {
+    return (
+    <header>       
+        <h1>Domino</h1>
+        <h3>Guy & Naor</h3>
+    </header>
+        );
+    };
 
-ReactDOM.render(<App />, document.getElementById("root"));
+export default Header;
