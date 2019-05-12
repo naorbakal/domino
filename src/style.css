@@ -30,3 +30,123 @@ h1{
 
 }
 
+.dominoTile {
+    /* transform: rotate(90deg); */
+    background-color: rgb(255, 255, 255);
+    float: left;
+    font-size: 12px;
+    width: 4em;
+    height: 8em;
+    margin: 30px;
+    position: relative;
+    border-radius: .8em;
+    box-shadow: 0.1em 0.1em 0em 0.2em rgb(36, 36, 36);
+}
+
+.line {
+    width: 3.8em;
+    height: .2em;
+    position: absolute;
+    top: 4em;
+    left: .10em;
+    background-color: black;
+}
+
+.bcc135 {
+
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 5.7em;
+    left: 1.7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.tcc135 {
+    width: 0.7em;
+    height: 0.7em;
+    position: absolute;
+    top: 2.1em;
+    left: 1.7em;
+    border-radius: 50%;
+    background-color: black;
+}
+
+
+.tl456 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 6.4em;
+    left: 1.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+.cl6 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 8.0em;
+    left: 1.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+.bl23456 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 9.6em;
+    left: 1.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+.tr23456 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 6.4em;
+    left: 4.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+.cr6 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 8.0em;
+    left: 4.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+.br456 {
+    width: 1.2em;
+    height: 1.2em;
+    position: absolute;
+    top: 9.6em;
+    left: 4.0em;
+    -webkit-border-radius: 4em;
+    -moz-border-radius: 4em;
+    border-radius: 4em;
+    background-color: black;
+}
+
+
+
+
+

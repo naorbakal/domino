@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import style from "./style.css";
-import DominoTile from "./dominoTile";
 
 /* Directly adding react element */
 // ReactDOM.render(
@@ -9,18 +8,19 @@ import DominoTile from "./dominoTile";
 //     document.getElementById("root")
 // );
 
-class Game extends React.Component {
+class DominoTile extends React.Component {
     constructor(props){
         super(props);
     }
     render(){
         return (
-            <div className="game">
-            <DominoTile />
-            <DominoTile />
+            <div className="dominoTile">
+            <span className="line"></span>
+            <span className="tcc135"></span>
+            <span className="bcc135"></span>
             </div>
         );
     }
 }
 
-export default Game;
+export default DominoTile;
