@@ -9,38 +9,38 @@ import style from "./style.css";
 // );
 
 
-class DominoTile extends React.Component {    
+class DominoTile extends React.Component {   
+
     constructor(props){
         super(props);
-        const classes = ["bcc135","tcc135","bbl23456","ttl456","bcl6","tcl6","btl456","tbl23456","btr23456","ttr23456","bcr6","tcr6","bbr456","tbr456"];
+        this.classes = ["bcc135","tcc135","bbl23456","ttl456","bcl6","tcl6","btl456","tbl23456","btr23456","ttr23456","bcr6","tcr6","bbr456","tbr456"];
     }
     
     render(){
-
-        const dots = this.props.value.map((number) =>{
-            this.classes.map((class) =>{
-                if (class.search("^t.*1\w+") != -1){
-
-                }
-            });
+        
+        var rgx = new RegExp ("^t.*" + this.props.value[0]);
+        console.log(rgx);
+        const topDots = this.classes.map((classString) => {
+            
+            if (classString.search(rgx) !== -1){
+                console.log(classString);
+                return <span key={1} className= {classString}></span>
+            }            
         });
+
+        rgx = new RegExp ("^b.*" + this.props.value[1]);    
+        const buttomDots = this.classes.map((classString) => {
+             
+            if (classString.search(rgx) !== -1){
+                return <span key={2} className={classString} />
+            }
+        }); 
+  
         return (
             <div className="dominoTile">
-            <span className="line"></span>
-            {/* <span className="tcc135"></span> */}
-            {/* <span className="bcc135"></span> */}
-            {/* <span className="bbl23456"></span> */}
-            {/* <span className="ttl456"></span> */}
-            {/* <span className="bcl6"></span> */}
-            {/* <span className="tcl6"></span> */}
-            {/* <span className="btl456"></span> */}
-            <span className="tbl23456"></span>
-            {/* <span className="btr23456"></span> */}
-            <span className="ttr23456"></span>
-            {/* <span className="bcr6"></span> */}
-            {/* <span className="tcr6"></span> */}
-            {/* <span className="bbr456"></span> */}
-            {/* <span className="tbr456"></span> */}
+                <span className="line" />
+                {topDots}
+                {buttomDots}
             </div>
         );
     }
