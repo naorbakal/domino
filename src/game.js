@@ -16,7 +16,7 @@ class Game extends React.Component {
     render(){
         return (
             <div className="game">
-            <DominoTile />
+            <DominoTile value={[5,4]}/>
             <DominoTile />
             </div>
         );
