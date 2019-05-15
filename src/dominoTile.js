@@ -18,21 +18,22 @@ class DominoTile extends React.Component {
     
     render(){
         
-        var rgx = new RegExp ("^t.*" + this.props.value[0]);
+        var key = this.props.values.first.toString() + this.props.values.second.toString();
+        var rgx = new RegExp ("^t.*" + this.props.values.first);
         console.log(rgx);
-        const topDots = this.classes.map((classString) => {
+        const topDots = this.classes.map((classString,index) => {
             
             if (classString.search(rgx) !== -1){
                 console.log(classString);
-                return <span key={1} className= {classString}></span>
+                return <span key={key + " top " +index} className= {classString}></span>
             }            
         });
 
-        rgx = new RegExp ("^b.*" + this.props.value[1]);    
-        const buttomDots = this.classes.map((classString) => {
+        rgx = new RegExp ("^b.*" + this.props.values.second);    
+        const buttomDots = this.classes.map((classString,index) => {
              
             if (classString.search(rgx) !== -1){
-                return <span key={2} className={classString} />
+                return <span key={key + " buttom " +index} className={classString} />
             }
         }); 
   
