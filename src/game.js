@@ -7,6 +7,7 @@ import Player from "./player";
 import Board from './board';
 import Statistics from './statistics';
 import DominoTileObj from "./dominoTileTObj";
+import { isArray } from 'util';
 
 
 class Game extends React.Component {
@@ -25,16 +26,34 @@ class Game extends React.Component {
             }
         }
     }  
-    
      chooseRandomTile(){
-        return this.dominoTilesArr[Math.floor(Math.random()*this.dominoTilesArr.length)];
+        let index;
+        let tempDeck = new Array();
+        tempDeck = this.dominoTilesArr.filter((tile) =>{
+            if(tile.location === "deck"){
+                return tile;
+            }
+        });
+        index = Math.floor(Math.random() * tempDeck.length);
+        console.log(tempDeck);
+        tempDeck[index].location="player";  
+        return tempDeck[index];     
+    }
+
+    chooseStartingTiles(){
+        var tiles = new Array();
+        for(var i=0; i<6 ;i++){
+            tiles.push(this.chooseRandomTile());
+        }
+        return tiles;
     }
   
     render(){
+        let startingTiles = this.chooseStartingTiles();
         return (
             <div className="game">
                 <Deck />
-                <Player />
+                <Player startingTiles={startingTiles} />
                 <Board />
                 <Statistics />
             </div>
