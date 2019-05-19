@@ -6,7 +6,7 @@ import Deck from "./deck";
 import Player from "./player";
 import Board from './board';
 import Statistics from './statistics';
-import dominoTileObj from "./dominoTileTObj";
+import DominoTileObj from "./dominoTileTObj";
 
 
 class Game extends React.Component {
@@ -14,25 +14,23 @@ class Game extends React.Component {
     constructor(props){
         super(props);
         this.dominoTilesArr = new Array();
-        //createTiles();  
+        this.createTiles()  
         this.state={dominoTiles: this.dominoTilesArr};
     }
-/*
-    createTiles = ()=>{
+
+    createTiles(){
         for(let i=0; i<=6; i++){
             for(let j=i; j<=6; j++){
                 this.dominoTilesArr.push(new DominoTileObj(i,j));
             }
         }
     }  
-
-    chooseRandomTile= ()=>{
+    
+     chooseRandomTile(){
         return this.dominoTilesArr[Math.floor(Math.random()*this.dominoTilesArr.length)];
     }
-
-*/
+  
     render(){
-
         return (
             <div className="game">
                 <Deck />
