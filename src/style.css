@@ -2,6 +2,7 @@ body{
     background-image: url(./gameBackground.jpg);
     margin: 0;
     line-height: 0.9;
+    overflow: hidden;
 }
 
 header {
