@@ -2,16 +2,8 @@ body{
     background-image: url(./gameBackground.jpg);
     margin: 0;
     line-height: 0.9;
-    overflow: hidden;
 }
-.player{
-    width: 50%;
-    height: 15%;
-    bottom: 0;
-    left: 25%;
-    position:fixed;
-    background-color: aqua
-}
+
 header {
     width: 100%;
     height:5%;
@@ -33,43 +25,19 @@ h1{
 }
 
 .game {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.panel {
-    float: left;
     position: relative;
-    height: 60%;
-    width: 10%;
-    background-color: gray;
-}
+    margin-top: 0;
 
-.board{
-    position: relative;
-    float: left;
-    height: 72%;
-    width:80%;
-    background-color: white;
-    opacity: 0.1;
-    margin:0px;
 }
-
-.centered{
-    position: relative;
-    top: 30%;
-    left: 30%;
-}
-
 
 .dominoTile {
     transform: rotate(0deg);
     background-color: rgb(255, 255, 255);
+    float: left;
     font-size: 12px;
-    width: 4em;
-    height: 8em;
-    margin: 3px;
+    width: 3em;
+    height: 6em;
+    margin: 5px;
     position: relative;
     border-radius: .8em;
     box-shadow: 0.1em 0.1em 0em 0.2em rgb(36, 36, 36);
