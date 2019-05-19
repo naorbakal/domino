@@ -2,22 +2,41 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import style from "./style.css";
 import DominoTile from "./dominoTile";
+import Deck from "./deck";
+import Player from "./player";
+import Board from './board';
+import Statistics from './statistics';
+import dominotileObj from "./dominoTileTObj";
 
-/* Directly adding react element */
-// ReactDOM.render(
-//     React.createElement('div',null, 'hello world from react '), 
-//     document.getElementById("root")
-// );
 
 class Game extends React.Component {
+       
     constructor(props){
         super(props);
+        this.dominoTilesArr = new Array();
+        createTiles();  
+        this.state={dominoTiles: this.dominoTilesArr};
+    }
+
+    createTiles = ()=>{
+        for(let i=0; i<=6; i++){
+            for(let j=i; j<=6; j++){
+                this.dominoTilesArr.push(new DominoTileObj(i,j));
+            }
+        }
+    }  
+
+    chooseRandomTile= ()=>{
+        return this.dominoTilesArr[Math.floor(Math.random()*this.dominoTilesArr.length)];
     }
     render(){
+
         return (
             <div className="game">
-            <DominoTile value={[3,3]} />
-            <DominoTile value={[2,3]}/>
+                <Deck />
+                <Player />
+                <Board />
+                <Statistics />
             </div>
         );
     }
