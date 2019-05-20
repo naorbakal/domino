@@ -4,9 +4,12 @@ import style from "./style.css";
 import DominoTile from "./dominoTile";
 
 function Player(props) {
+    const listItems = props.playerTiles.map((tile)=>{
+       return <DominoTile values={{top:tile.values.top,bottom:tile.values.bottom}}/>
+    })
     return (
         <footer className="player">
-            <DominoTile values={{first:3,second:5}} />
+            {listItems}
         </footer>
     )
   }
