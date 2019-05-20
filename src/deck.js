@@ -11,7 +11,7 @@ function Deck(props) {
     }
     return(
         <div className="panel">
-            <button className="dominoTile centered">    
+            <button className="dominoTile centered" onClick= {props.onClick}>    
             </button>
         </div>
     )

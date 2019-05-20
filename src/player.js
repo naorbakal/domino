@@ -5,7 +5,7 @@ import DominoTile from "./dominoTile";
 
 function Player(props) {
     const listItems = props.playerTiles.map((tile)=>{
-       return <DominoTile values={{top:tile.values.top,bottom:tile.values.bottom}}/>
+       return <DominoTile key={"" + tile.values.top.toString() + tile.values.bottom.toString()} values={{top:tile.values.top,bottom:tile.values.bottom}}/>
     })
     return (
         <footer className="player">

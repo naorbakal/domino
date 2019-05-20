@@ -15,8 +15,13 @@ class Game extends React.Component {
     constructor(props){
         super(props);
         this.state={dominoTiles: new Array()};
-        this.createTiles();
-        this.tiles = this.chooseStartingTiles();
+        this.componentDidMount 
+    }
+
+    componentDidMount(){
+        let dominoTiles = this.createTiles();
+        this.chooseStartingTiles(dominoTiles);
+        this.setState({dominoTiles: dominoTiles});
     }
 
     deepCopy(obj){
@@ -24,43 +29,41 @@ class Game extends React.Component {
      }
 
     createTiles(){
-
         let tempDominoTilesArr = new Array();
+
         for(let i=0; i<=6; i++){
             for(let j=i; j<=6; j++){
                 tempDominoTilesArr.push(new DominoTileObj(i,j)); 
             }
         }
-        this.state.dominoTiles = this.deepCopy(tempDominoTilesArr);
-        tempDominoTilesArr[0].values = {top:1,bottom:1};
-        console.log(this.state.dominoTiles[0].values);
-        console.log(tempDominoTilesArr[0].values);
+        return tempDominoTilesArr;
     }  
 
-     chooseRandomTile(){
+     chooseRandomTile(dominoTiles){
         let index;
-        let tempDeck = new Array();
-        tempDeck = this.state.dominoTiles.filter((tile) =>{
+        let deck = new Array();
+        deck = dominoTiles.filter((tile) =>{
             if(tile.location === "deck"){
                 return tile;
             }
         });
-        index = Math.floor(Math.random() * tempDeck.length);
-        tempDeck[index].location="player";  
-        return tempDeck[index];     
+        index = Math.floor(Math.random() * deck.length);
+        deck[index].location="player"; 
+        
+        return dominoTiles;
     }
+     
 
-    chooseStartingTiles(){
-        var tiles = new Array();
+    chooseStartingTiles(dominoTiles){
         for(var i=0; i<6 ;i++){
-            tiles.push(this.chooseRandomTile());
+            this.chooseRandomTile(dominoTiles);
         }
-        return tiles;
     }
   
     pullFromDeck(){
-        chooseRandomTile();
-        this.setState((state) =>{{dominoTiles: state.dominoTiles}});
+        let dominoTiles = this.deepCopy(this.state.dominoTiles);
+        this.chooseRandomTile(dominoTiles);
+        this.setState({dominoTiles: dominoTiles});
     }
 
     render(){
@@ -72,8 +75,8 @@ class Game extends React.Component {
         
         return (
             <div className="game">
-                <Deck onClick={()=>{this.pullFromDeck.bind(this)
-                }}/>
+                <Deck onClick={() => this.pullFromDeck()
+                }/>
                 <Player playerTiles={playerTiles} />
                 <Board />
                 <Statistics />
