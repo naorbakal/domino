@@ -7,14 +7,16 @@ import Player from "./player";
 import Board from './board';
 import Statistics from './statistics';
 import DominoTileObj from "./dominoTileTObj";
+import {boardObj} from "./boardObj";
 
 class Game extends React.Component {
        
     constructor(props){
         super(props);
         this.state={dominoTiles: new Array(),
-                    playerTiles: new Array()};
-        this.componentDidMount;
+                    playerTiles: new Array(),
+                    boardTiles: new Array()
+                };
     }
 
     componentDidMount(){
@@ -23,6 +25,12 @@ class Game extends React.Component {
         this.setState({dominoTiles: dominoTiles,
                        playerTiles: playerTiles,
         });
+    }
+
+    checkTileLocation(tile,location){
+        if(tile.location === location){
+            return tile;
+        }
     }
 
     deepCopy(obj){
@@ -43,11 +51,7 @@ class Game extends React.Component {
      chooseRandomTile(dominoTiles){
         let index;
         let deck = new Array();
-        deck = dominoTiles.filter((tile) =>{
-            if(tile.location === "deck"){
-                return tile;
-            }
-        });
+        deck = dominoTiles.filter((tile) => {return this.checkTileLocation(tile,"deck")});
         index = Math.floor(Math.random() * deck.length);
         deck[index].location = "player";
 
@@ -60,12 +64,7 @@ class Game extends React.Component {
             this.chooseRandomTile(dominoTiles);
         }
 
-        let playerTiles = dominoTiles.filter((tile)=>{
-            if(tile.location === "player"){
-                return tile;
-            }
-        });
-
+        let playerTiles = dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
         return playerTiles;
     }
   
@@ -78,20 +77,53 @@ class Game extends React.Component {
                        playerTiles: playerTiles});
     }
 
-    render(){
-        /*
-        let playerTiles = this.state.dominoTiles.filter((tile)=>{
-            if(tile.location === "player"){
-                return tile;
+    dominoTileOnClickHandler(selectedDominoTile){
+        let game = this.deepCopy(this.state);
+
+        this.firstTurn(game, selectedDominoTile);
+
+        this.highlightDomino(game, selectedDominoTile);
+
+        this.setState({ dominoTiles: game.dominoTiles,
+                        playerTiles: game.playerTiles,
+                        boardTiles: game.boardTiles});
+    }
+
+    firstTurn(game, selectedDominoTile){
+        if(boardObj.isEmpty){
+            game.playerTiles.forEach(element => {
+                if(element.values.top === selectedDominoTile.top &&
+                   element.values.bottom === selectedDominoTile.bottom){
+                    element.position.top = boardObj.nextPositions[0].top;
+                    element.position.left = boardObj.nextPositions[0].left;
+                    element.angle = boardObj.nextPositions[0].angle;
+                    element.location = "board";
+                    game.boardTiles.push(element);
+                    game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
             }
         });
-        */
-        
+    }
+    }
+
+    highlightDomino(game, selectedDominoTile){
+        game.playerTiles.forEach(element => {
+            if(element.values.top === selectedDominoTile.top &&
+               element.values.bottom === selectedDominoTile.bottom){
+                element.selected = true;
+            }
+            else{
+                element.selected = false;
+            }            
+        });
+    }
+
+
+    render(){        
         return (
-            <div className="game">
+            <div className="game"> 
                 <Deck onClick={() => this.pullFromDeck()
                 }/>
-                <Player playerTiles={this.state.playerTiles} />
+                <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)} />
                 <Board  boardTiles={this.state.boardTiles}/>
                 <Statistics />
             </div>
