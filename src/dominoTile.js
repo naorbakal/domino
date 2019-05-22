@@ -31,7 +31,6 @@ class DominoTile extends React.Component {
         if(this.props.tile.selected === true){
             classNames += " selected";
         }
-        console.log(classNames + " " + this.props.tile.angle);
         return classNames + " " + this.props.tile.angle;
     }
 

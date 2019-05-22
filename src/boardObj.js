@@ -1,8 +1,8 @@
 
 class BoardObj{
         constructor(){
-            this.height = 102;
-            this.width = 102;
+            this.height = 56;
+            this.width = 56;
             this.matrix = this.createMatrix();
             this.nextPositions = new Array();
             this.getStartPosition();
@@ -23,17 +23,44 @@ class BoardObj{
     }
 
     getStartPosition(){
-        this.nextPositions.push({top: "45%", left: "45%", angle: "horizontal"});
+        this.nextPositions.push({top: "45%", left: "45%", angle: "horizontal270"});
     }
 
-    getNextPositions(){
-        
+    getPossibleMoves(selectedDominoTile){
+
     }
+
+    updateBoard(selectedTile, cell){
+            if(selectedTile.angle === "vertical"){
+                matrix[cell.row][cell.col-1].possibleInserts.bottom = selectedTile.values.top;
+                matrix[cell.row][cell.col+1].possibleInserts.top = selectedTile.values.bottom;
+
+            }
+            else if(selectedTile.angle === "horizontal90"){
+                
+            }
+            else if(selectedTile.angle === "horizontal270"){
+                
+            }
+            else{
+                matrix[cell.row][cell.col-1].possibleInserts.top = selectedTile.values.top;
+                matrix[cell.row][cell.col+1].possibleInserts.bottom = selectedTile.values.bottom;
+            }
+            this.matrix[cell.row][cell.col].dominoTile = selectedTile;
+            this.matrix[cell.row][cell.col].dominoTile = true;
+            console.log(this.matrix);
+     }
 }
 
 class Cell{
     constructor(){
-        this.number;
+        this.isOccupied = false;
+        this.possibleInserts = {
+            left:null,
+            right:null,
+            top:null,
+            bottom:null
+        }
         this.dominoTile;
     }
 }

@@ -77,33 +77,75 @@ class Game extends React.Component {
                        playerTiles: playerTiles});
     }
 
-    dominoTileOnClickHandler(selectedDominoTile){
+    topToRight(){
+        
+    }
+
+    topToLeft(){
+
+    }
+
+    topToBotton(){
+
+    }
+
+    bottomToRight(){
+
+    }
+
+    bottomToLeft(){
+
+    }
+
+    bottomToTop(){
+
+    }
+
+
+    dominoTileOnClickHandler(selectedTileValues){
         let game = this.deepCopy(this.state);
+        let possibleMoves;
+        let selectedTile = this.findTile(game,selectedTileValues);
 
-        this.firstTurn(game, selectedDominoTile);
+        this.firstTurn(game, selectedTile);   
+        this.highlightDomino(game, selectedTileValues);
 
-        this.highlightDomino(game, selectedDominoTile);
+        possibleMoves = boardObj.getPossibleMoves(selectedTileValues);
 
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
                         boardTiles: game.boardTiles});
     }
 
-    firstTurn(game, selectedDominoTile){
-        if(boardObj.isEmpty){
-            game.playerTiles.forEach(element => {
-                if(element.values.top === selectedDominoTile.top &&
-                   element.values.bottom === selectedDominoTile.bottom){
-                    element.position.top = boardObj.nextPositions[0].top;
-                    element.position.left = boardObj.nextPositions[0].left;
-                    element.angle = boardObj.nextPositions[0].angle;
-                    element.location = "board";
-                    game.boardTiles.push(element);
-                    game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
+
+
+    findTile(game,dominoValues){
+        let res;
+        game.playerTiles.forEach(element => {
+            if(element.values.top === dominoValues.top &&
+               element.values.bottom === dominoValues.bottom){             
+                res = element;
             }
-        });
-    }
-    }
+            });
+
+            return res;
+        }
+
+    firstTurn(game, selectedTile){
+        let boardPosition = {row:28, col:28, tile:selectedTile};
+        if(boardObj.isEmpty){
+            selectedTile.position.top = boardObj.nextPositions[0].top;
+            selectedTile.position.left = boardObj.nextPositions[0].left;
+            selectedTile.angle = boardObj.nextPositions[0].angle;
+            selectedTile.location = "board";
+            game.boardTiles.push(selectedTile);
+            game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
+            }
+    
+        boardObj.isEmpty = false;
+    
+    boardObj.updateBoard(selectedTile,boardPosition);
+}
 
     highlightDomino(game, selectedDominoTile){
         game.playerTiles.forEach(element => {

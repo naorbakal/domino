@@ -103,8 +103,13 @@ h1{
     transform: rotate(0deg);
 }
 
-.horizontal{
-    transform: rotate(90deg) !important;
+.horizontal90{
+    transform: rotate(90deg);
+}
+
+.horizontal270{
+    transform: rotate(270deg);
+
 }
 
 .upsideDown{
