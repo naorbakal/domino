@@ -2,9 +2,10 @@
 class DominoTileObj{
     constructor(top, bottom){ 
         this.angle="vertical",
+        this.selected = false;
         this.position={
-            x:null,
-            y:null
+            top:null,
+            left:null
         }
         this.location="deck",
         this.values={
