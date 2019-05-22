@@ -1,10 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import style from "./style.css";
 
 class DominoTileObj{
     constructor(top, bottom){ 
-        this.angle="horizontal",
+        this.angle="vertical",
         this.position={
             x:null,
             y:null

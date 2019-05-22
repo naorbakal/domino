@@ -6,11 +6,8 @@ import DominoTile from './dominoTile';
 
 function Deck(props) {   
 
-    var classList={
-
-    }
     return(
-        <div className="panel">
+        <div className="panel deck">
             <button className="dominoTile centered" onClick= {props.onClick}>    
             </button>
         </div>

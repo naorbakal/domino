@@ -4,7 +4,7 @@ import style from "./style.css";
 
 function Statistics(props){
     return(
-        <div className="panel">
+        <div className="panel stat">
         </div>
     )
 }
