@@ -32,8 +32,8 @@ class BoardObj{
 
     updateBoard(selectedTile, cell){
             if(selectedTile.angle === "vertical"){
-                matrix[cell.row][cell.col-1].possibleInserts.bottom = selectedTile.values.top;
-                matrix[cell.row][cell.col+1].possibleInserts.top = selectedTile.values.bottom;
+                this.matrix[cell.row][cell.col-1].possibleInserts.bottom = selectedTile.values.top;
+                this.matrix[cell.row][cell.col+1].possibleInserts.top = selectedTile.values.bottom;
 
             }
             else if(selectedTile.angle === "horizontal90"){
@@ -43,8 +43,8 @@ class BoardObj{
                 
             }
             else{
-                matrix[cell.row][cell.col-1].possibleInserts.top = selectedTile.values.top;
-                matrix[cell.row][cell.col+1].possibleInserts.bottom = selectedTile.values.bottom;
+                this.matrix[cell.row][cell.col-1].possibleInserts.top = selectedTile.values.top;
+                this.matrix[cell.row][cell.col+1].possibleInserts.bottom = selectedTile.values.bottom;
             }
             this.matrix[cell.row][cell.col].dominoTile = selectedTile;
             this.matrix[cell.row][cell.col].dominoTile = true;
