@@ -77,28 +77,16 @@ class Game extends React.Component {
                        playerTiles: playerTiles});
     }
 
-    topToRight(){
-        
+    topToRightBottomToLeft(selectedTile){
+        selectedTile.angle = "horizontal90"; 
     }
 
-    topToLeft(){
-
+    topToLeftBottomToRight(selectedTile){
+        selectedTile.angle = "horizontal270";
     }
 
-    topToBotton(){
-
-    }
-
-    bottomToRight(){
-
-    }
-
-    bottomToLeft(){
-
-    }
-
-    bottomToTop(){
-
+    flip(selectTile){
+        selectTile.angle = "upsideDown";
     }
 
 
@@ -140,9 +128,9 @@ class Game extends React.Component {
             selectedTile.location = "board";
             game.boardTiles.push(selectedTile);
             game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
+
+            boardObj.isEmpty = false;
             }
-    
-        boardObj.isEmpty = false;
     
     boardObj.updateBoard(selectedTile,boardPosition);
 }

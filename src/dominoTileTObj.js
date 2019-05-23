@@ -11,7 +11,8 @@ class DominoTileObj{
         this.values={
             top:top,
             bottom:bottom
-        }   
+        }
+        this.isDouble = (this.values.top === this.values.bottom);   
     }
 }
 
