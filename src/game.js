@@ -113,6 +113,7 @@ class Game extends React.Component {
     possibleMoveClickHandler(selectedPossibleMove){
         let game = this.deepCopy(this.state);
         let selectedTile = this.findSelectedTile(game);
+        boardObj.possibleMoves.length=0;
         selectedTile.selected = false;
         selectedTile.position.top = selectedPossibleMove.position.top;
         selectedTile.position.left =selectedPossibleMove.position.left;

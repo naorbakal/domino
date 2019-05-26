@@ -30,7 +30,7 @@ class BoardObj{
         let angle;
         for (var i=0;i<this.height;i++){    
             for (var j=0; j<this.width; j++){
-                if(this.matrix[i][j].accessible === true  && this.matrix[i][j].isOccupied === false){
+                if(this.matrix[i][j].accessible === true && this.matrix[i][j].isOccupied === false){
                     if(selectedTile.values.top === this.matrix[i][j].possibleInserts.top){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
                         this.possibleMoves.push({angle: angle, col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top",selectedTile.isDouble)});                     
@@ -57,7 +57,7 @@ class BoardObj{
                     }
 
                     else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.bottom){
-                        angle = selectedTile.isDouble === true ? "horizontal90" : "updsideDown";
+                        angle = selectedTile.isDouble === true ? "horizontal90" : "upsideDown";
                         this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});                       
                     }
                     else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.top){
@@ -73,7 +73,9 @@ class BoardObj{
     calculateOnBoardPosition(row,col,direction, isDouble){
         let top, left;
 
-        if (direction === "top"){
+        if (direction === "top" &&
+         (this.matrix[row-1][col].dominoTile.angle === "horizontal90" ||
+         this.matrix[row-1][col].dominoTile.angle === "horizontal270")){
             top = this.matrix[row-1][col].dominoTile.position.top + 12;
             if(isDouble === false){
                 left = this.matrix[row-1][col].dominoTile.position.left;
@@ -82,7 +84,9 @@ class BoardObj{
                 left = this.matrix[row-1][col].dominoTile.position.left - 2;
             }
         }
-        else if(direction === "bottom"){
+        else if(direction === "bottom" && 
+        (this.matrix[row+1][col].dominoTile.angle === "horizontal90" ||
+        this.matrix[row+1][col].dominoTile.angle === "horizontal270")){
             top = this.matrix[row+1][col].dominoTile.position.top - 12;
             if(isDouble === false){
                 left = this.matrix[row+1][col].dominoTile.position.left;
@@ -91,23 +95,67 @@ class BoardObj{
                 left = this.matrix[row+1][col].dominoTile.position.left - 2;
             }
         }
-        else if(direction === "right"){
+        else if(direction === "right" &&
+        (this.matrix[row][col+1].dominoTile.angle === "horizontal90" ||
+        this.matrix[row][col+1].dominoTile.angle === "horizontal270")
+                ){
             left = this.matrix[row][col+1].dominoTile.position.left - 8;
             if(isDouble === false){
                 top = this.matrix[row][col+1].dominoTile.position.top;
             }
             else{
-                top = this.matrix[row][col+1].dominoTile.position.top + 3 ;
+                top = this.matrix[row][col+1].dominoTile.position.top + 10 ;
             }
             
         }
-        else{ //left
+        else if(direction === "left" &&
+        (this.matrix[row][col-1].dominoTile.angle === "horizontal90" ||
+        this.matrix[row][col-1].dominoTile.angle === "horizontal270")){
             left = this.matrix[row][col-1].dominoTile.position.left + 8;
             if(isDouble === false){
                 top = this.matrix[row][col-1].dominoTile.position.top;
             }
             else{
+                top = this.matrix[row][col-1].dominoTile.position.top + 10;
+            }          
+        
+        }
+        // horizontal90/270
+        else if (direction === "top"){
+            top = this.matrix[row-1][col].dominoTile.position.top + 16;
+            if(isDouble === false){
+                left = this.matrix[row-1][col].dominoTile.position.left;
+            }
+            else{
+                left = this.matrix[row-1][col].dominoTile.position.left - 2;
+            }
+        }
+        else if(direction === "bottom"){
+            top = this.matrix[row+1][col].dominoTile.position.top - 16;
+            if(isDouble === false){
+                left = this.matrix[row+1][col].dominoTile.position.left;
+            }
+            else{
+                left = this.matrix[row+1][col].dominoTile.position.left - 2;
+            }
+        }
+        else if(direction === "right"){
+            left = this.matrix[row][col+1].dominoTile.position.left - 6.5;
+            if(isDouble === false){
+                top = this.matrix[row][col+1].dominoTile.position.top;
+            }
+            else{
+                top = this.matrix[row][col+1].dominoTile.position.top + 10;
+            }
+            
+        }
+        else if (direction === "left"){ //left
+            left = this.matrix[row][col-1].dominoTile.position.left + 6.5;
+            if(isDouble === false){
                 top = this.matrix[row][col-1].dominoTile.position.top;
+            }
+            else{
+                top = this.matrix[row][col-1].dominoTile.position.top + 10;
             }          
         
         }
@@ -126,6 +174,7 @@ class BoardObj{
                 this.matrix[cell.row-1][cell.col].possibleInserts.bottom = selectedTile.values.bottom;
                 this.matrix[cell.row+1][cell.col].possibleInserts.top = selectedTile.values.top;
             }
+            //need to check if Occupied
             this.matrix[cell.row-1][cell.col].accessible = true;
             this.matrix[cell.row+1][cell.col].accessible = true;
 
