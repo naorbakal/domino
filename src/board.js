@@ -16,7 +16,8 @@ function Board(props){
     });
     
      const possibleMovesOnBoard = props.possibleMoves.map((possibleMove)=>{
-        return <PossibleMoveTile 
+        return <PossibleMoveTile
+         key = {possibleMove.position.top.toString() + " " + possibleMove.position.left.toString()}
          possibleMove = {possibleMove}
          onClickHandler={props.possibleMoveOnClickHandler}
         />

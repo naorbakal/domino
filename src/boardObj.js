@@ -72,22 +72,22 @@ class BoardObj{
 
     calculateOnBoardPosition(row,col,direction, isDouble){
         let top, left;
-
         if (direction === "top" &&
          (this.matrix[row-1][col].dominoTile.angle === "horizontal90" ||
          this.matrix[row-1][col].dominoTile.angle === "horizontal270")){
-            top = this.matrix[row-1][col].dominoTile.position.top + 12;
+            top = this.matrix[row-1][col].dominoTile.position.top + 13;
             if(isDouble === false){
+               
                 left = this.matrix[row-1][col].dominoTile.position.left;
             }
             else{
                 left = this.matrix[row-1][col].dominoTile.position.left - 2;
-            }
+            } 
         }
         else if(direction === "bottom" && 
         (this.matrix[row+1][col].dominoTile.angle === "horizontal90" ||
         this.matrix[row+1][col].dominoTile.angle === "horizontal270")){
-            top = this.matrix[row+1][col].dominoTile.position.top - 12;
+            top = this.matrix[row+1][col].dominoTile.position.top - 14;
             if(isDouble === false){
                 left = this.matrix[row+1][col].dominoTile.position.left;
             }
@@ -97,50 +97,54 @@ class BoardObj{
         }
         else if(direction === "right" &&
         (this.matrix[row][col+1].dominoTile.angle === "horizontal90" ||
-        this.matrix[row][col+1].dominoTile.angle === "horizontal270")
-                ){
-            left = this.matrix[row][col+1].dominoTile.position.left - 8;
+        this.matrix[row][col+1].dominoTile.angle === "horizontal270")){
+            //good
+            top = this.matrix[row][col+1].dominoTile.position.top;
             if(isDouble === false){
-                top = this.matrix[row][col+1].dominoTile.position.top;
+                left = this.matrix[row][col+1].dominoTile.position.left - 8;
             }
             else{
-                top = this.matrix[row][col+1].dominoTile.position.top + 10 ;
+                left = this.matrix[row][col+1].dominoTile.position.left - 6;
             }
             
         }
         else if(direction === "left" &&
         (this.matrix[row][col-1].dominoTile.angle === "horizontal90" ||
         this.matrix[row][col-1].dominoTile.angle === "horizontal270")){
-            left = this.matrix[row][col-1].dominoTile.position.left + 8;
+            // good
+            top = this.matrix[row][col-1].dominoTile.position.top;
             if(isDouble === false){
-                top = this.matrix[row][col-1].dominoTile.position.top;
+                left = this.matrix[row][col-1].dominoTile.position.left + 8;
+                
             }
             else{
-                top = this.matrix[row][col-1].dominoTile.position.top + 10;
+                left = this.matrix[row][col-1].dominoTile.position.left + 6;
             }          
         
         }
-        // horizontal90/270
+        // vertical + upsideDown
         else if (direction === "top"){
-            top = this.matrix[row-1][col].dominoTile.position.top + 16;
-            if(isDouble === false){
-                left = this.matrix[row-1][col].dominoTile.position.left;
+            //good
+            left = this.matrix[row-1][col].dominoTile.position.left;
+            if(isDouble === false){              
+                top = this.matrix[row-1][col].dominoTile.position.top + 17;               
             }
             else{
-                left = this.matrix[row-1][col].dominoTile.position.left - 2;
+                top = this.matrix[row-1][col].dominoTile.position.top + 14;
             }
         }
         else if(direction === "bottom"){
-            top = this.matrix[row+1][col].dominoTile.position.top - 16;
+            //good
+            left = this.matrix[row+1][col].dominoTile.position.left;        
             if(isDouble === false){
-                left = this.matrix[row+1][col].dominoTile.position.left;
+                top = this.matrix[row+1][col].dominoTile.position.top - 17.5;
             }
             else{
-                left = this.matrix[row+1][col].dominoTile.position.left - 2;
+                top = this.matrix[row+1][col].dominoTile.position.top - 16;
             }
         }
         else if(direction === "right"){
-            left = this.matrix[row][col+1].dominoTile.position.left - 6.5;
+            left = this.matrix[row][col+1].dominoTile.position.left - 6;
             if(isDouble === false){
                 top = this.matrix[row][col+1].dominoTile.position.top;
             }
@@ -150,7 +154,7 @@ class BoardObj{
             
         }
         else if (direction === "left"){ //left
-            left = this.matrix[row][col-1].dominoTile.position.left + 6.5;
+            left = this.matrix[row][col-1].dominoTile.position.left + 6;
             if(isDouble === false){
                 top = this.matrix[row][col-1].dominoTile.position.top;
             }
