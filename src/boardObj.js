@@ -74,7 +74,7 @@ class BoardObj{
         let top, left;
 
         if (direction === "top"){
-            top = this.matrix[row-1][col].dominoTile.position.top + 6;
+            top = this.matrix[row-1][col].dominoTile.position.top + 12;
             if(isDouble === false){
                 left = this.matrix[row-1][col].dominoTile.position.left;
             }
@@ -83,7 +83,7 @@ class BoardObj{
             }
         }
         else if(direction === "bottom"){
-            top = this.matrix[row+1][col].dominoTile.position.top - 6;
+            top = this.matrix[row+1][col].dominoTile.position.top - 12;
             if(isDouble === false){
                 left = this.matrix[row+1][col].dominoTile.position.left;
             }
@@ -92,7 +92,7 @@ class BoardObj{
             }
         }
         else if(direction === "right"){
-            left = this.matrix[row][col+1].dominoTile.position.left - 13;
+            left = this.matrix[row][col+1].dominoTile.position.left - 8;
             if(isDouble === false){
                 top = this.matrix[row][col+1].dominoTile.position.top;
             }
@@ -102,7 +102,7 @@ class BoardObj{
             
         }
         else{ //left
-            left = this.matrix[row][col-1].dominoTile.position.left + 60;
+            left = this.matrix[row][col-1].dominoTile.position.left + 8;
             if(isDouble === false){
                 top = this.matrix[row][col-1].dominoTile.position.top;
             }

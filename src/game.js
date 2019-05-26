@@ -15,7 +15,8 @@ class Game extends React.Component {
         super(props);
         this.state={dominoTiles: new Array(),
                     playerTiles: new Array(),
-                    boardTiles: new Array()
+                    boardTiles: new Array(),
+                    selectedTile:null
                 };
     }
 
@@ -94,20 +95,52 @@ class Game extends React.Component {
         let game = this.deepCopy(this.state);
         let selectedTile = this.findTile(game,selectedTileValues);
 
+
         if(boardObj.isEmpty === true){
             this.firstTurn(game, selectedTile);
             boardObj.isEmpty = false;
         }
         else{
-            this.highlightDomino(game, selectedTileValues);
+            this.highlightDomino(game, selectedTileValues); 
             boardObj.getPossibleMoves(selectedTile);
         }
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles});
+                        boardTiles: game.boardTiles,
+                        selectedTile:selectedTile
+                     });
     }
 
+    possibleMoveClickHandler(selectedPossibleMovePosition){
+        let game = this.deepCopy(this.state);
+        let selectedPossibleMove = this.findPossibleMove(selectedPossibleMovePosition);
+        game.selectedTile.selected=false;
+        game.selectedTile.position.top=selectedPossibleMove.position.top;
+        game.selectedTile.position.left=selectedPossibleMove.position.left;
+        game.selectedTile.angle = selectedPossibleMove.angle;
+        game.selectedTile.location = "board";
+        game.boardTiles.push(game.selectedTile);
+        game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
+        boardObj.updateBoard(game.selectedTile,{row:selectedPossibleMove.row,col:selectedPossibleMove.col});
+        
+        this.setState({ dominoTiles: game.dominoTiles,
+            playerTiles: game.playerTiles,
+            boardTiles: game.boardTiles,
+            selectedTile: game.selectedTile
+         });
+    }
 
+    findPossibleMove(selectedPossibleMovePosition){
+        let res;
+            boardObj.possibleMoves.forEach(element => {
+            if(element.position.top === selectedPossibleMovePosition.top &&
+               element.position.bottom === selectedPossibleMovePosition.bottom){             
+                res = element;
+            }
+            });
+
+            return res;
+        }
 
     findTile(game,dominoValues){
         let res;
@@ -151,7 +184,7 @@ class Game extends React.Component {
                 <Deck onClick={() => this.pullFromDeck()
                 }/>
                 <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
-                <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves}/>
+                <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves} possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
                 <Statistics />
             </div>
         );

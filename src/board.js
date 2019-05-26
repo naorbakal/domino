@@ -19,6 +19,7 @@ function Board(props){
         return <PossibleMoveTile 
          angle = {possibleMove.angle}
          position = {possibleMove.position}
+         onClickHandler={props.possibleMoveOnClickHandler}
         />
      });
 

@@ -13,6 +13,7 @@ function PossibleMoveTile(props){
         key = {"top:" + props.position.top.toString() + props.position.top.toString()}
         className={"possibleMove " + props.angle}
         style ={styleObj}
+        onClick={()=>{props.onClickHandler({top:props.position.top, left:props.position.left})}}
         >      
         </div>
     )
