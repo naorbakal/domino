@@ -16,7 +16,6 @@ class Game extends React.Component {
         this.state={dominoTiles: new Array(),
                     playerTiles: new Array(),
                     boardTiles: new Array(),
-                    selectedTile:null
                 };
     }
 
@@ -111,30 +110,29 @@ class Game extends React.Component {
                      });
     }
 
-    possibleMoveClickHandler(selectedPossibleMovePosition){
+    possibleMoveClickHandler(selectedPossibleMove){
         let game = this.deepCopy(this.state);
-        let selectedPossibleMove = this.findPossibleMove(selectedPossibleMovePosition);
-        game.selectedTile.selected=false;
-        game.selectedTile.position.top=selectedPossibleMove.position.top;
-        game.selectedTile.position.left=selectedPossibleMove.position.left;
-        game.selectedTile.angle = selectedPossibleMove.angle;
-        game.selectedTile.location = "board";
-        game.boardTiles.push(game.selectedTile);
-        game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
-        boardObj.updateBoard(game.selectedTile,{row:selectedPossibleMove.row,col:selectedPossibleMove.col});
+        let selectedTile = this.findSelectedTile(game);
+        selectedTile.selected = false;
+        selectedTile.position.top = selectedPossibleMove.position.top;
+        selectedTile.position.left =selectedPossibleMove.position.left;
+        selectedTile.angle = selectedPossibleMove.angle;
+        selectedTile.location = "board";
+        game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
+        game.boardTiles.push(selectedTile);
+        
+        boardObj.updateBoard(selectedTile,{row: selectedPossibleMove.row,col: selectedPossibleMove.col});
         
         this.setState({ dominoTiles: game.dominoTiles,
-            playerTiles: game.playerTiles,
-            boardTiles: game.boardTiles,
-            selectedTile: game.selectedTile
+                        playerTiles: game.playerTiles,
+                        boardTiles: game.boardTiles,
          });
     }
 
-    findPossibleMove(selectedPossibleMovePosition){
+    findSelectedTile(game){
         let res;
-            boardObj.possibleMoves.forEach(element => {
-            if(element.position.top === selectedPossibleMovePosition.top &&
-               element.position.bottom === selectedPossibleMovePosition.bottom){             
+        game.playerTiles.forEach(element => {
+            if(element.selected === true){
                 res = element;
             }
             });
@@ -153,6 +151,7 @@ class Game extends React.Component {
 
             return res;
         }
+    
 
     firstTurn(game, selectedTile){
         let boardPosition = {row:28, col:28, tile:selectedTile};

@@ -17,8 +17,7 @@ function Board(props){
     
      const possibleMovesOnBoard = props.possibleMoves.map((possibleMove)=>{
         return <PossibleMoveTile 
-         angle = {possibleMove.angle}
-         position = {possibleMove.position}
+         possibleMove = {possibleMove}
          onClickHandler={props.possibleMoveOnClickHandler}
         />
      });

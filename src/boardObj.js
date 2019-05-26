@@ -30,7 +30,7 @@ class BoardObj{
         let angle;
         for (var i=0;i<this.height;i++){    
             for (var j=0; j<this.width; j++){
-                if(this.matrix[i][j].accessible === true){
+                if(this.matrix[i][j].accessible === true  && this.matrix[i][j].isOccupied === false){
                     if(selectedTile.values.top === this.matrix[i][j].possibleInserts.top){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
                         this.possibleMoves.push({angle: angle, col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top",selectedTile.isDouble)});                     
