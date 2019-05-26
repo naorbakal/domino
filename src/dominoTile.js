@@ -20,8 +20,8 @@ class DominoTile extends React.Component {
     getBoardPosition(){
         if(this.props.tile.position.top != null){
             this.style ={
-                top: this.props.tile.position.top,
-                left: this.props.tile.position.left
+                top: this.props.tile.position.top.toString() +"%",
+                left: this.props.tile.position.left.toString() +"%"
             }
         }
     }

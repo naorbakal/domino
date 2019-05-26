@@ -105,6 +105,17 @@ h1{
 
 }
 
+.possibleMove {
+    background-color: rgba(43, 255, 0, 0.589);
+    float: left;
+    font-size: 12px;
+    width: 3em;
+    height: 6em;
+    margin: 5px;
+    position: relative;
+    border-radius: .8em;
+}
+
 .player .dominoTile{
     -webkit-transition:all .3s ease-out;
     -moz-transition:all .3s ease-out;

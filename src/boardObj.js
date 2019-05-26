@@ -4,8 +4,12 @@ class BoardObj{
             this.height = 56;
             this.width = 56;
             this.matrix = this.createMatrix();
-            this.nextPositions = new Array();
-            this.getStartPosition();
+            this.possibleMoves = new Array();
+            this.startPos = {
+                angle: "horizontal270",
+                top: 40,
+                left:45
+            }
             this.isEmpty = true;
     }
 
@@ -21,13 +25,62 @@ class BoardObj{
 
         return matrix;
     }
+    getPossibleMoves(selectedTile){
+        this.possibleMoves = new Array();
+        for (var i=0;i<this.height;i++){    
+            for (var j=0; j<this.width; j++){
+                if(this.matrix[i][j].accessible === true){
+                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.top){
+                        this.possibleMoves.push({angle: "vertical", col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top")});                     
+                    }
+                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.bottom){
+                        this.possibleMoves.push({angle: "vertical", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});      
+                    }
+                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.right){
+                        this.possibleMoves.push({angle: "horizontal90", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"right")});
+                    }
+                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.left){
+                        this.possibleMoves.push({angle: "horizontal90", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"left")});
+                    }
+                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.left){                      
+                            this.possibleMoves.push({angle: "horizontal270", col:j, row:i,position: this.calculateOnBoardPosition(i,j,"left")});   
+                    }
+                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.right){
+                            this.possibleMoves.push({angle: "horizontal270", col:j, row:i,position: this.calculateOnBoardPosition(i,j,"right")});   
+                    }
 
-    getStartPosition(){
-        this.nextPositions.push({top: "45%", left: "45%", angle: "horizontal270"});
+                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.bottom){
+                            this.possibleMoves.push({angle: "upsideDown", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});                       
+                    }
+                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.top){
+                            this.possibleMoves.push({angle: "upsideDown", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});                       
+                    }
+                }
+            }
+        }  
     }
 
-    getPossibleMoves(selectedTile){
-        
+    calculateOnBoardPosition(row,col,direction){
+        let top, left;
+
+        if (direction === "top"){
+            top = this.matrix[row-1][col].dominoTile.position.top - 6;
+            left = this.matrix[row-1][col].dominoTile.position.left;
+        }
+        else if(direction === "bottom"){
+            top = this.matrix[row+1][col].dominoTile.position.top + 6;
+            left = this.matrix[row+1][col].dominoTile.position.left;
+        }
+        else if(direction === "right"){
+            top = this.matrix[row][col+1].dominoTile.position.top;
+            left = this.matrix[row][col+1].dominoTile.position.left - 12;
+        }
+        else{ //left
+            top = this.matrix[row][col-1].dominoTile.position.top;
+            left = this.matrix[row][col-1].dominoTile.position.left + 3;
+        }
+
+        return {top:top, left:left};
     }
 
     updateBoard(selectedTile, cell){
@@ -76,6 +129,7 @@ class BoardObj{
         this.matrix[cell.row][cell.col].accessible = false;
         console.log(this.matrix);
      }
+
 }
 
 class Cell{

@@ -92,14 +92,16 @@ class Game extends React.Component {
 
     dominoTileOnClickHandler(selectedTileValues){
         let game = this.deepCopy(this.state);
-        let possibleMoves;
         let selectedTile = this.findTile(game,selectedTileValues);
 
-        this.firstTurn(game, selectedTile);   
-        this.highlightDomino(game, selectedTileValues);
-
-        possibleMoves = boardObj.getPossibleMoves(selectedTile);
-
+        if(boardObj.isEmpty === true){
+            this.firstTurn(game, selectedTile);
+            boardObj.isEmpty = false;
+        }
+        else{
+            this.highlightDomino(game, selectedTileValues);
+            boardObj.getPossibleMoves(selectedTile);
+        }
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
                         boardTiles: game.boardTiles});
@@ -121,19 +123,14 @@ class Game extends React.Component {
 
     firstTurn(game, selectedTile){
         let boardPosition = {row:28, col:28, tile:selectedTile};
-        if(boardObj.isEmpty){
-            selectedTile.position.top = boardObj.nextPositions[0].top;
-            selectedTile.position.left = boardObj.nextPositions[0].left;
-            selectedTile.angle = boardObj.nextPositions[0].angle;
-            selectedTile.location = "board";
-            game.boardTiles.push(selectedTile);
-            game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
-
-            boardObj.isEmpty = false;
-            }
-    
-    boardObj.updateBoard(selectedTile,boardPosition);
-}
+        selectedTile.position.top = boardObj.startPos.top;
+        selectedTile.position.left = boardObj.startPos.left;
+        selectedTile.angle = boardObj.startPos.angle;
+        selectedTile.location = "board";
+        game.boardTiles.push(selectedTile);
+        game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
+        boardObj.updateBoard(selectedTile,boardPosition);            
+    }
 
     highlightDomino(game, selectedDominoTile){
         game.playerTiles.forEach(element => {
@@ -153,8 +150,8 @@ class Game extends React.Component {
             <div className="game"> 
                 <Deck onClick={() => this.pullFromDeck()
                 }/>
-                <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)} />
-                <Board  boardTiles={this.state.boardTiles}/>
+                <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
+                <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves}/>
                 <Statistics />
             </div>
         );
