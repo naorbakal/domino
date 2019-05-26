@@ -98,7 +98,7 @@ class Game extends React.Component {
         this.firstTurn(game, selectedTile);   
         this.highlightDomino(game, selectedTileValues);
 
-        possibleMoves = boardObj.getPossibleMoves(selectedTileValues);
+        possibleMoves = boardObj.getPossibleMoves(selectedTile);
 
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
