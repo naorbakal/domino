@@ -27,57 +27,89 @@ class BoardObj{
     }
     getPossibleMoves(selectedTile){
         this.possibleMoves = new Array();
+        let angle;
         for (var i=0;i<this.height;i++){    
             for (var j=0; j<this.width; j++){
                 if(this.matrix[i][j].accessible === true){
                     if(selectedTile.values.top === this.matrix[i][j].possibleInserts.top){
-                        this.possibleMoves.push({angle: "vertical", col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top")});                     
+                        angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
+                        this.possibleMoves.push({angle: angle, col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top",selectedTile.isDouble)});                     
                     }
-                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.bottom){
-                        this.possibleMoves.push({angle: "vertical", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});      
+                    else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.bottom){
+                        angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
+                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});      
                     }
-                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.right){
-                        this.possibleMoves.push({angle: "horizontal90", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"right")});
+                    else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.right){
+                        angle = selectedTile.isDouble === true ? "vertical" : "horizontal90";
+                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"right",selectedTile.isDouble)});
                     }
-                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.left){
-                        this.possibleMoves.push({angle: "horizontal90", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"left")});
+                    else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.left){
+                        angle = selectedTile.isDouble === true ? "vertical" : "horizontal90";
+                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});
                     }
-                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.left){                      
-                            this.possibleMoves.push({angle: "horizontal270", col:j, row:i,position: this.calculateOnBoardPosition(i,j,"left")});   
+                    else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.left){
+                        angle = selectedTile.isDouble === true ? "vertical" : "horizontal270";                      
+                            this.possibleMoves.push({angle: angle, col:j, row:i,position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});   
                     }
-                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.right){
-                            this.possibleMoves.push({angle: "horizontal270", col:j, row:i,position: this.calculateOnBoardPosition(i,j,"right")});   
+                    else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.right){
+                        angle = selectedTile.isDouble === true ? "vertical" : "horizontal270";
+                        this.possibleMoves.push({angle: angle, col:j, row:i,position: this.calculateOnBoardPosition(i,j,"right", selectedTile.isDouble)});   
                     }
 
-                    if(selectedTile.values.top === this.matrix[i][j].possibleInserts.bottom){
-                            this.possibleMoves.push({angle: "upsideDown", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});                       
+                    else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.bottom){
+                        angle = selectedTile.isDouble === true ? "horizontal90" : "updsideDown";
+                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});                       
                     }
-                    if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.top){
-                            this.possibleMoves.push({angle: "upsideDown", col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom")});                       
+                    else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.top){
+                        angle = selectedTile.isDouble === true ? "horizontal90" : "upsideDown";
+                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"top", selectedTile.isDouble)});                       
                     }
+                
                 }
             }
         }  
     }
 
-    calculateOnBoardPosition(row,col,direction){
+    calculateOnBoardPosition(row,col,direction, isDouble){
         let top, left;
 
         if (direction === "top"){
-            top = this.matrix[row-1][col].dominoTile.position.top - 6;
-            left = this.matrix[row-1][col].dominoTile.position.left;
+            top = this.matrix[row-1][col].dominoTile.position.top + 6;
+            if(isDouble === false){
+                left = this.matrix[row-1][col].dominoTile.position.left;
+            }
+            else{
+                left = this.matrix[row-1][col].dominoTile.position.left - 2;
+            }
         }
         else if(direction === "bottom"){
-            top = this.matrix[row+1][col].dominoTile.position.top + 6;
-            left = this.matrix[row+1][col].dominoTile.position.left;
+            top = this.matrix[row+1][col].dominoTile.position.top - 6;
+            if(isDouble === false){
+                left = this.matrix[row+1][col].dominoTile.position.left;
+            }
+            else{
+                left = this.matrix[row+1][col].dominoTile.position.left - 2;
+            }
         }
         else if(direction === "right"){
-            top = this.matrix[row][col+1].dominoTile.position.top;
-            left = this.matrix[row][col+1].dominoTile.position.left - 12;
+            left = this.matrix[row][col+1].dominoTile.position.left - 13;
+            if(isDouble === false){
+                top = this.matrix[row][col+1].dominoTile.position.top;
+            }
+            else{
+                top = this.matrix[row][col+1].dominoTile.position.top + 3 ;
+            }
+            
         }
         else{ //left
-            top = this.matrix[row][col-1].dominoTile.position.top;
-            left = this.matrix[row][col-1].dominoTile.position.left + 3;
+            left = this.matrix[row][col-1].dominoTile.position.left + 60;
+            if(isDouble === false){
+                top = this.matrix[row][col-1].dominoTile.position.top;
+            }
+            else{
+                top = this.matrix[row][col-1].dominoTile.position.top;
+            }          
+        
         }
 
         return {top:top, left:left};
@@ -127,7 +159,6 @@ class BoardObj{
         this.matrix[cell.row][cell.col].dominoTile = selectedTile;
         this.matrix[cell.row][cell.col].isOccupied = true;
         this.matrix[cell.row][cell.col].accessible = false;
-        console.log(this.matrix);
      }
 
 }
