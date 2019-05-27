@@ -23,14 +23,20 @@ class Game extends React.Component {
                         score:0
                     }
                 };
+        this.needDraw = false;
     }
 
     componentDidMount(){
         let dominoTiles = this.createTiles();
         let playerTiles = this.chooseStartingTiles(dominoTiles);
+        this.needDraw = false;
         this.setState({dominoTiles: dominoTiles,
                        playerTiles: playerTiles
         });
+    }
+
+    componentDidUpdate(){
+        this.needDraw = this.checkIfNeedDraw();
     }
 
     checkTileLocation(tile,location){
@@ -75,13 +81,18 @@ class Game extends React.Component {
     }
   
     pullFromDeck(){
-        let dominoTiles = this.deepCopy(this.state.dominoTiles);
-        let playerTiles = this.deepCopy(this.state.playerTiles);
-        let newTile = this.chooseRandomTile(dominoTiles);
-        playerTiles.push(newTile);
+        if(this.needDraw === true){
+            let dominoTiles = this.deepCopy(this.state.dominoTiles);
+            let playerTiles = this.deepCopy(this.state.playerTiles);
+            let newTile = this.chooseRandomTile(dominoTiles);
+            playerTiles.push(newTile);
 
-        this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles});
+            this.setState({dominoTiles: dominoTiles,
+                            playerTiles: playerTiles});
+        }
+        else{
+            alert("you can play");
+        }
     }
 
     topToRightBottomToLeft(selectedTile){
@@ -101,7 +112,6 @@ class Game extends React.Component {
         let game = this.deepCopy(this.state);
         let selectedTile = this.findTile(game,selectedTileValues);
 
-
         if(boardObj.isEmpty === true){
             this.firstTurn(game, selectedTile);
             boardObj.isEmpty = false;
@@ -110,11 +120,34 @@ class Game extends React.Component {
             this.highlightDomino(game, selectedTileValues); 
             boardObj.getPossibleMoves(selectedTile);
         }
+
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
                         boardTiles: game.boardTiles
                      });
+        
     }
+
+    checkIfNeedDraw(){
+        let needDraw = true;
+        if(boardObj.isEmpty){
+            console.log("board empty");
+            needDraw = false;
+        }
+        else{ 
+        for(let i=0; i<this.state.playerTiles.length; i++){
+                boardObj.getPossibleMoves(this.state.playerTiles[i]);
+                console.log(boardObj.possibleMoves);
+                if(boardObj.possibleMoves.length > 0){
+                    needDraw = false;
+                    break;
+                }
+            }
+        }
+        boardObj.possibleMoves.length = 0;
+        return needDraw;
+    }
+    
 
     possibleMoveClickHandler(selectedPossibleMove){
         let game = this.deepCopy(this.state);
@@ -182,7 +215,6 @@ class Game extends React.Component {
             }            
         });
     }
-
 
     render(){        
         return (
