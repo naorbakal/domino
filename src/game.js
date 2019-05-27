@@ -16,6 +16,12 @@ class Game extends React.Component {
         this.state={dominoTiles: new Array(),
                     playerTiles: new Array(),
                     boardTiles: new Array(),
+                    statistics:{
+                        turnsSoFar:0,
+                        averagePlayTime:0,
+                        withdrawals:0,
+                        score:0
+                    }
                 };
     }
 
@@ -23,7 +29,7 @@ class Game extends React.Component {
         let dominoTiles = this.createTiles();
         let playerTiles = this.chooseStartingTiles(dominoTiles);
         this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles,
+                       playerTiles: playerTiles
         });
     }
 
@@ -73,6 +79,7 @@ class Game extends React.Component {
         let playerTiles = this.deepCopy(this.state.playerTiles);
         let newTile = this.chooseRandomTile(dominoTiles);
         playerTiles.push(newTile);
+
         this.setState({dominoTiles: dominoTiles,
                        playerTiles: playerTiles});
     }
@@ -105,8 +112,7 @@ class Game extends React.Component {
         }
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles,
-                        selectedTile:selectedTile
+                        boardTiles: game.boardTiles
                      });
     }
 
@@ -126,7 +132,7 @@ class Game extends React.Component {
         
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles,
+                        boardTiles: game.boardTiles
          });
     }
 
@@ -185,7 +191,7 @@ class Game extends React.Component {
                 }/>
                 <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
                 <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves} possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
-                <Statistics />
+                <Statistics statistics = {this.state.statistics}/>
             </div>
         );
     }
