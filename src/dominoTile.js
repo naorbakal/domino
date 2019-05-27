@@ -20,8 +20,8 @@ class DominoTile extends React.Component {
     getBoardPosition(){
         if(this.props.tile.position.top != null){
             this.style ={
-                top: this.props.tile.position.top,
-                left: this.props.tile.position.left
+                top: this.props.tile.position.top.toString() +"%",
+                left: this.props.tile.position.left.toString() +"%"
             }
         }
     }
@@ -31,7 +31,6 @@ class DominoTile extends React.Component {
         if(this.props.tile.selected === true){
             classNames += " selected";
         }
-        console.log(classNames + " " + this.props.tile.angle);
         return classNames + " " + this.props.tile.angle;
     }
 

@@ -20,7 +20,12 @@ h1{
     margin-top: 0;
 }
 .selected{
-    box-shadow:0.1em 0.1em 0em 0.2em #66ff00 !important;
+    box-shadow: 10px -7px 15px lightgreen  , darkgray 0px 0px 3px inset !important;
+    -webkit-transform:translate(0px,-10px) !important ;
+    -moz-transform:translate(0px,-10px) !important;
+    -ms-transform:translate(0px,-10px) !important;
+    -o-transform:translate(0px,-10px) !important;
+    transform:translate(0px,-10px) !important;
 }
 .player{
     width: 50%;
@@ -62,19 +67,24 @@ h1{
 .deck{
     border-bottom-right-radius: .8em;
     border-top-right-radius: .8em;
-    border-right: 2px solid black; 
+    border-right: 2px solid black;
 }
 
 .stat{
+    font-family: Tahoma, Geneva, sans-serif;
+	color:#000; 
     border-bottom-left-radius: .8em;
     border-top-left-radius: .8em;
-    border-left: 2px solid black; 
+    border-left: 2px solid black;  
+    right: 0 !important;
+    text-align: center;
 }
 
 .board{
    position: relative;
+   top: 1%;
    float: left;
-   height: 72%;
+   height: 70%;
    width:80%;
    background-color: rgba(255, 255, 255, 0.212);
    margin:0px;
@@ -89,7 +99,6 @@ h1{
 
 .dominoTile {
     background-color: rgb(255, 255, 255);
-    float: left;
     font-size: 12px;
     width: 3em;
     height: 6em;
@@ -99,12 +108,63 @@ h1{
     box-shadow: 0.1em 0.1em 0em 0.2em rgb(36, 36, 36);
 }
 
+.board .dominoTile {
+    box-shadow: 0em 0em 0em 0em rgb(36, 36, 36) !important;
+}
+
+.possibleMove {
+    background-color: rgba(43, 255, 0, 0.308);
+    font-size: 12px;
+    width: 3em;
+    height: 6em;
+    margin: 5px;
+    position: relative;
+    border-radius: .8em;
+    position: absolute;
+}
+
+.possibleMove:hover{
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    background-color: rgba(43, 255, 0, 0.5);
+ -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+-moz-box-shadow:    0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+}
+
+.player .dominoTile{
+    -webkit-transition:all .3s ease-out;
+    -moz-transition:all .3s ease-out;
+    -ms-transition:all .3s ease-out;
+    -o-transition:all .3s ease-out;
+    transition:all .3s ease-out;
+    float: left;
+}
+
+.player  .dominoTile:hover {
+    -webkit-transform:translate(0px,-10px);
+    -moz-transform:translate(0px,-10px);
+    -ms-transform:translate(0px,-10px);
+    -o-transform:translate(0px,-10px);
+    transform:translate(0px,-10px);
+}
+
+.board .dominoTile{
+    position: absolute;
+}
+
 .vertical{
     transform: rotate(0deg);
 }
 
-.horizontal{
-    transform: rotate(90deg) !important;
+.horizontal90{
+    transform: rotate(90deg);
+}
+
+.horizontal270{
+    transform: rotate(270deg);
+
 }
 
 .upsideDown{
@@ -262,6 +322,30 @@ h1{
     background-color: black;
 }
 
+.stopwatch {
+    position: relative;
+    top: 3%;
+    margin-top: -3px;
+    margin-left: -130px;
+	text-align:center;
+    transform: translate(-50%, -50%);
+    float: left;
+}
+.stat .clock {
+    margin-top:10%;
+    font-size: 30px;
+    position: relative;
+}
+.stat .statLabel{
+    font:bold;
+    margin-top:40%;
+    font-size: 15px;
+    position:relative;
+}
+
+.statLabel p{
+    
+}
 
 
 
