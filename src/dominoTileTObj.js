@@ -12,6 +12,7 @@ class DominoTileObj{
             top:top,
             bottom:bottom
         }
+        this.endGame = false;
         this.isDouble = (this.values.top === this.values.bottom);   
     }
 }

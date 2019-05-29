@@ -11,7 +11,6 @@ class Clock extends React.Component{
     }
 
     moveClock(){
-        console.log(123);
         let clockCopy = JSON.parse(JSON.stringify(this.state));
 
         if(clockCopy.seconds.right < 9)
