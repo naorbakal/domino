@@ -29,14 +29,31 @@ class Game extends React.Component {
     componentDidMount(){
         let dominoTiles = this.createTiles();
         let playerTiles = this.chooseStartingTiles(dominoTiles);
-        this.needDraw = false;
+        //this.needDraw = false;
+        let score = this.getPlayerScore(playerTiles);
         this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles
+                       playerTiles: playerTiles,
+                       statistics:{
+                        turnsSoFar:0,
+                        averagePlayTime:0,
+                        withdrawals:0,
+                        score: score
+                       }
         });
     }
 
     componentDidUpdate(){
+        let game = this.deepCopy(this.state); 
         this.needDraw = this.checkIfNeedDraw();
+    }
+
+    getPlayerScore(playerTiles){
+        let score = 0;
+
+        for(let i=0; i<playerTiles.length; i++){
+            score += playerTiles[i].values.top + playerTiles[i].values.bottom;
+        }
+        return score;
     }
 
     checkTileLocation(tile,location){
@@ -82,13 +99,15 @@ class Game extends React.Component {
   
     pullFromDeck(){
         if(this.needDraw === true){
-            let dominoTiles = this.deepCopy(this.state.dominoTiles);
-            let playerTiles = this.deepCopy(this.state.playerTiles);
-            let newTile = this.chooseRandomTile(dominoTiles);
-            playerTiles.push(newTile);
-
-            this.setState({dominoTiles: dominoTiles,
-                            playerTiles: playerTiles});
+            let game = this.deepCopy(this.state);;
+            let newTile = this.chooseRandomTile(game.dominoTiles);
+            game.playerTiles.push(newTile);
+            game.statistics.score = this.getPlayerScore(game.playerTiles);
+            this.setState({dominoTiles: game.dominoTiles,
+                            playerTiles: game.playerTiles,
+                            statistics:{
+                                score: game.statistics.score
+                            }});
         }
         else{
             alert("you can play");
