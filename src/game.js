@@ -16,6 +16,12 @@ class Game extends React.Component {
         this.state={dominoTiles: new Array(),
                     playerTiles: new Array(),
                     boardTiles: new Array(),
+                    statistics:{
+                        turnsSoFar:0,
+                        averagePlayTime:0,
+                        withdrawals:0,
+                        score:0
+                    }
                 };
         this.needDraw = false;
     }
@@ -25,7 +31,7 @@ class Game extends React.Component {
         let playerTiles = this.chooseStartingTiles(dominoTiles);
         this.needDraw = false;
         this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles,
+                       playerTiles: playerTiles
         });
     }
 
@@ -160,7 +166,7 @@ class Game extends React.Component {
         
         this.setState({ dominoTiles: game.dominoTiles,
                         playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles,
+                        boardTiles: game.boardTiles
          });       
     }
 
@@ -218,7 +224,7 @@ class Game extends React.Component {
                 }/>
                 <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
                 <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves} possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
-                <Statistics />
+                <Statistics statistics = {this.state.statistics}/>
             </div>
         );
     }
