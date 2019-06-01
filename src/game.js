@@ -203,7 +203,7 @@ class Game extends React.Component {
         boardObj.updateBoard(selectedTile,{row: selectedPossibleMove.row,col: selectedPossibleMove.col});
         game.board = boardObj.matrix;
         this.updateStatistics(game);
-
+        
         this.checkIfPlayerWinOrLoose(game);
        
         if(game.playerTiles.length === 0){
@@ -266,28 +266,31 @@ class Game extends React.Component {
         });
     }
 
+    undoOnClickHandler(){
+        
+    }
     prevOnClickHandler(){
-        let index = this.state.statistics.turnsSoFar - 1;
+        let index = this.state.statistics.turnsSoFar -1;
         if(index < 0){
             alert("no more prev ya dush!");
         }
         else{
-        if(this.state.statistics.turnsSoFar === this.history.length){
-            this.history.push(this.state);
+            this.setState({ dominoTiles: this.history[index].dominoTiles,
+                playerTiles: this.history[index].playerTiles,
+                boardTiles: this.history[index].boardTiles,
+                board: this.history[index].board,
+                statistics: this.history[index].statistics,
+            });
+            if(index === 0){
+                boardObj.isEmpty = true;
             }
-        }
+            boardObj.matrix = this.deepCopy(this.history[index].board);
+            this.history.pop();
+            console.log(this.history.length);
 
-        this.setState({ dominoTiles: this.history[index].dominoTiles,
-                        playerTiles: this.history[index].playerTiles,
-                        boardTiles: this.history[index].boardTiles,
-                        board: this.history[index].board,
-                        statistics: this.history[index].statistics,
-                        history: this.history
-        });
-        if(index === 0){
-            boardObj.isEmpty = true;
+
         }
-        boardObj.matrix = this.history[index].board;
+        
     }
 
     nextOnClickHandler(){
