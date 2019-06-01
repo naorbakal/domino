@@ -47,17 +47,16 @@ class Game extends React.Component {
 
     componentDidUpdate(){
         this.needDraw = this.checkIfNeedDraw();
-        this.checkIfPlayerWinOrLoose();
     }
 
-    checkIfPlayerWinOrLoose(){
-        if(this.state.playerTiles.length === 0){
+    checkIfPlayerWinOrLoose(game){
+        if(game.playerTiles.length === 0){
             this.endGame = true;
             console.log(this.endGame);
             alert("you win");           
         }
         else{
-            let deck = this.state.dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"deck")});
+            let deck = game.dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"deck")});
             if(deck.length === 0 && this.needDraw === true){
                 this.endGame = true;
                 alert("you lose");
@@ -205,7 +204,7 @@ class Game extends React.Component {
         game.board = boardObj.matrix;
         this.updateStatistics(game);
 
-        this.checkIfPlayerWinOrLoose();
+        this.checkIfPlayerWinOrLoose(game);
        
         if(game.playerTiles.length === 0){
             for(let i=0; i<game.boardTiles.length; i++){
@@ -315,24 +314,28 @@ class Game extends React.Component {
     render(){
         let buttonClass;      
         if(this.endGame === true){
+            console.log("entered")
             buttonClass = " ";
         }
         else{
             buttonClass = "hidden";
         }
         return (
-                <div className="game"> 
-                <Deck onClick={() => this.pullFromDeck()
-                } prevOnClickHandler={this.prevOnClickHandler.bind(this)} 
-                nextOnClickHandler={this.nextOnClickHandler.bind(this)}
-                 buttonClass={buttonClass}/>
-                     <Player playerTiles={this.state.playerTiles} 
+            <div className="game">
+                <div className="firstRow">
+                    <Deck onClick={() => this.pullFromDeck()
+                     } prevOnClickHandler={this.prevOnClickHandler.bind(this)} 
+                     nextOnClickHandler={this.nextOnClickHandler.bind(this)}
+                     buttonClass={buttonClass}/>
+                    <Board  boardTiles={this.state.boardTiles} 
+                        possibleMoves={boardObj.possibleMoves} 
+                        possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
+                    <Statistics statistics = {this.state.statistics}/>
+                    </div> 
+                <div className="secondRow">
+                <Player playerTiles={this.state.playerTiles} 
                     dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
-                <Board  boardTiles={this.state.boardTiles} 
-                possibleMoves={boardObj.possibleMoves} 
-                possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
-                <Statistics statistics = {this.state.statistics}/>
-            
+                </div>    
             </div>
         )
     }

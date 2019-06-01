@@ -14,10 +14,10 @@ import background from "./gameBackground.jpg";
 
 const Wrapper = () => {
     return (
-    <div className="wrapper">
-        <Header />
+    <React.Fragment> 
+       <Header />
         <Game />
-    </div>
+    </React.Fragment>
         );
     };
 

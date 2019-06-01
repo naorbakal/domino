@@ -1,13 +1,14 @@
-body{
+html,body{
     background-image: url(./gameBackground.jpg);
     margin: 0;
     line-height: 0.9;
-    overflow: hidden;
+    height: 100%;
+}
+#root{
+    height: 100%;
 }
 
 header {
-    width: 100%;
-    height:5%;
     background: rgb(7, 248, 176);
     text-align: center;
     top: 0;
@@ -27,9 +28,18 @@ h1{
     -o-transform:translate(0px,-10px) !important;
     transform:translate(0px,-10px) !important;
 }
+
+.firstRow{
+    display: flex;
+    flex: 1;
+}
+
+.secondRow{
+    display: flex;
+    justify-content: center;
+    flex:1;
+}
 .player{
-    width: 50%;
-    height: 25%;
     background-color: rgb(7, 248, 176);
     border-top-left-radius: .8em;
     border-top-right-radius: .8em;
@@ -37,40 +47,54 @@ h1{
     border-left: 2px solid black;
     border-right: 2px solid black;
     display: flex;
-    align-self: flex-end ;
+    flex-basis: 50%;
 }
 
-.player > div{
-    flex:1;
-}
 
 .wrapper {
     width: 100%;
     height: 100%;
+    display: flex;
 }
 
+.arrow-left { 
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent; 
+    border-right:20px solid black; 
+    cursor: pointer;
+  }
+
+  .arrow-right {
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    cursor: pointer;
+    border-left: 20px solid black;
+  }
 .game {
-    position: absolute;	
-    width: 100%;
-    height: 100%;
-    display:flex;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .panel {
    position: relative;
-   top: 5%;
-   height: 60%;
    margin-top: 0;
-   width: 9.8%;
    background-color: rgb(7, 248, 176);
    border-top: 2px solid black; 
-   border-bottom: 2px solid black; 
+   border-bottom: 2px solid black;
+   display: flex; 
+   flex-direction: column;
+   justify-content: space-evenly;
+   align-items: center;
+   flex:1;
 }
 
 .deck{
     border-bottom-right-radius: .8em;
     border-top-right-radius: .8em;
     border-right: 2px solid black;
+
 }
 
 .stat{
@@ -84,25 +108,20 @@ h1{
 }
 
 .board{
-   position: relative;
-   top: 1%;
-   float: left;
-   height: 70%;
-   width:80%;
-   background-color: rgba(255, 255, 255, 0.212);
-   margin:0px;
-   overflow: scroll;
+        position: relative;
+        background-color: rgba(255, 255, 255, 0.212);
+        overflow: scroll;
+        flex: 8;
 }
 	
 .centered{
    position: relative;
-   top: 30%;
-   left: 30%;
 }
 
 .hidden{
     display: none;
 }
+
 
 .dominoTile {
     background-color: rgb(255, 255, 255);
@@ -113,11 +132,6 @@ h1{
     position: relative;
     border-radius: .8em;
     box-shadow: 0.1em 0.1em 0em 0.2em rgb(36, 36, 36);
-    display: flex;
-}
-
-.dominoTile > span{
-    flex:1;
 }
 
 .board .dominoTile {

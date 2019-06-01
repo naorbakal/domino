@@ -7,11 +7,11 @@ import DominoTile from './dominoTile';
 function Deck(props) {   
 
     return(
-        <div className="panel deck">
-            <button className="dominoTile centered" onClick= {props.onClick}>   
-            </button>
-            <button className={props.buttonClass} onClick={()=>{props.prevOnClickHandler()}}>prev</button>
-            <button className={props.buttonClass} onClick={()=>{props.nextOnClickHandler()}}>next</button> 
+        <div className="panel deck"> 
+            <div className={props.buttonClass +"arrow-left"} onClick={()=>props.prevOnClickHandler()}></div>          
+            <button className="dominoTile " onClick= {props.onClick}>   
+            </button> 
+            <div className={props.buttonClass +"arrow-right"} onClick={()=>props.nextOnClickHandler()}></div>          
         </div>
     )
 }    
