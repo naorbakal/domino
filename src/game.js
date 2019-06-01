@@ -10,33 +10,69 @@ import DominoTileObj from "./dominoTileTObj";
 import {boardObj} from "./boardObj";
 
 class Game extends React.Component {
-       
     constructor(props){
         super(props);
         this.state={dominoTiles: new Array(),
                     playerTiles: new Array(),
                     boardTiles: new Array(),
+                    board: this.deepCopy(boardObj.matrix),
                     statistics:{
                         turnsSoFar:0,
                         averagePlayTime:0,
                         withdrawals:0,
                         score:0
-                    }
+                    },
                 };
         this.needDraw = false;
+        this.gameStartingTime;
+        this.history = new Array();
+        this.endGame = false;
     }
 
     componentDidMount(){
         let dominoTiles = this.createTiles();
         let playerTiles = this.chooseStartingTiles(dominoTiles);
         this.needDraw = false;
+        this.gameStartingTime = Date.now();
+        let score = this.getPlayerScore(playerTiles);
         this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles
+                       playerTiles: playerTiles,
+                       statistics:{
+                        turnsSoFar: 0,
+                        averagePlayTime: 0,
+                        withdrawals: 0,
+                        score : score}                      
         });
     }
 
     componentDidUpdate(){
         this.needDraw = this.checkIfNeedDraw();
+        this.checkIfPlayerWinOrLoose();
+    }
+
+    checkIfPlayerWinOrLoose(){
+        if(this.state.playerTiles.length === 0){
+            this.endGame = true;
+            console.log(this.endGame);
+            alert("you win");           
+        }
+        else{
+            let deck = this.state.dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"deck")});
+            if(deck.length === 0 && this.needDraw === true){
+                this.endGame = true;
+                alert("you lose");
+            }
+        }
+
+    }
+
+    getPlayerScore(playerTiles){
+        let score = 0;
+
+        for(let i=0; i<playerTiles.length; i++){
+            score += playerTiles[i].values.top + playerTiles[i].values.bottom;
+        }
+        return score;
     }
 
     checkTileLocation(tile,location){
@@ -64,10 +100,15 @@ class Game extends React.Component {
         let index;
         let deck = new Array();
         deck = dominoTiles.filter((tile) => {return this.checkTileLocation(tile,"deck")});
+        if(deck.length === 0){
+            alert("deck is empty");
+        }
+        else{
         index = Math.floor(Math.random() * deck.length);
         deck[index].location = "player";
 
         return deck[index]; 
+        }
     }
      
 
@@ -79,34 +120,37 @@ class Game extends React.Component {
         let playerTiles = dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
         return playerTiles;
     }
-  
+    
+    updateStatistics(game,updateWithdrawal = false ){
+        if(updateWithdrawal === true){
+            game.statistics.withdrawals++;
+        }
+        game.statistics.turnsSoFar++;
+        game.statistics.score = this.getPlayerScore(game.playerTiles);
+        game.statistics.averagePlayTime =  (((Date.now()- this.gameStartingTime)/1000) / game.statistics.turnsSoFar).toFixed(2);
+    }
     pullFromDeck(){
         if(this.needDraw === true){
-            let dominoTiles = this.deepCopy(this.state.dominoTiles);
-            let playerTiles = this.deepCopy(this.state.playerTiles);
-            let newTile = this.chooseRandomTile(dominoTiles);
-            playerTiles.push(newTile);
-
-            this.setState({dominoTiles: dominoTiles,
-                            playerTiles: playerTiles});
+            let game = this.deepCopy(this.state);
+            this.history.push(this.state);
+            let newTile = this.chooseRandomTile(game.dominoTiles);
+            game.playerTiles.push(newTile);
+            this.updateStatistics(game,true);
+            this.setState(game);
         }
         else{
             alert("you can play");
         }
     }
 
-    topToRightBottomToLeft(selectedTile){
-        selectedTile.angle = "horizontal90"; 
+    getPlayerScore(playerTiles){
+        let score = 0;
+        for(let i=0; i<playerTiles.length; i++){
+            score += playerTiles[i].values.top + 
+                playerTiles[i].values.bottom;
+        }
+        return score;
     }
-
-    topToLeftBottomToRight(selectedTile){
-        selectedTile.angle = "horizontal270";
-    }
-
-    flip(selectTile){
-        selectTile.angle = "upsideDown";
-    }
-
 
     dominoTileOnClickHandler(selectedTileValues){
         let game = this.deepCopy(this.state);
@@ -121,23 +165,18 @@ class Game extends React.Component {
             boardObj.getPossibleMoves(selectedTile);
         }
 
-        this.setState({ dominoTiles: game.dominoTiles,
-                        playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles
-                     });
+        this.setState(game);
         
     }
 
     checkIfNeedDraw(){
         let needDraw = true;
         if(boardObj.isEmpty){
-            console.log("board empty");
             needDraw = false;
         }
         else{ 
         for(let i=0; i<this.state.playerTiles.length; i++){
                 boardObj.getPossibleMoves(this.state.playerTiles[i]);
-                console.log(boardObj.possibleMoves);
                 if(boardObj.possibleMoves.length > 0){
                     needDraw = false;
                     break;
@@ -151,7 +190,9 @@ class Game extends React.Component {
 
     possibleMoveClickHandler(selectedPossibleMove){
         let game = this.deepCopy(this.state);
+        this.history.push(this.state);
         let selectedTile = this.findSelectedTile(game);
+
         boardObj.possibleMoves.length=0;
         selectedTile.selected = false;
         selectedTile.position.top = selectedPossibleMove.position.top;
@@ -160,13 +201,20 @@ class Game extends React.Component {
         selectedTile.location = "board";
         game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
         game.boardTiles.push(selectedTile);
-        
         boardObj.updateBoard(selectedTile,{row: selectedPossibleMove.row,col: selectedPossibleMove.col});
+        game.board = boardObj.matrix;
+        this.updateStatistics(game);
+
+        this.checkIfPlayerWinOrLoose();
+       
+        if(game.playerTiles.length === 0){
+            for(let i=0; i<game.boardTiles.length; i++){
+                game.boardTiles[i].endGame = true;
+            }
+        }
+
         
-        this.setState({ dominoTiles: game.dominoTiles,
-                        playerTiles: game.playerTiles,
-                        boardTiles: game.boardTiles
-         });
+        this.setState(game);
     }
 
     findSelectedTile(game){
@@ -194,6 +242,7 @@ class Game extends React.Component {
     
 
     firstTurn(game, selectedTile){
+        this.history.push(this.state);
         let boardPosition = {row:28, col:28, tile:selectedTile};
         selectedTile.position.top = boardObj.startPos.top;
         selectedTile.position.left = boardObj.startPos.left;
@@ -201,7 +250,9 @@ class Game extends React.Component {
         selectedTile.location = "board";
         game.boardTiles.push(selectedTile);
         game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});     
-        boardObj.updateBoard(selectedTile,boardPosition);            
+        boardObj.updateBoard(selectedTile,boardPosition);
+        game.board = boardObj.matrix;
+        this.updateStatistics(game);   
     }
 
     highlightDomino(game, selectedDominoTile){
@@ -216,14 +267,71 @@ class Game extends React.Component {
         });
     }
 
-    render(){        
+    prevOnClickHandler(){
+        let index = this.state.statistics.turnsSoFar - 1;
+        if(index < 0){
+            alert("no more prev ya dush!");
+        }
+        else{
+        if(this.state.statistics.turnsSoFar === this.history.length){
+            this.history.push(this.state);
+            }
+        }
+
+        this.setState({ dominoTiles: this.history[index].dominoTiles,
+                        playerTiles: this.history[index].playerTiles,
+                        boardTiles: this.history[index].boardTiles,
+                        board: this.history[index].board,
+                        statistics: this.history[index].statistics,
+                        history: this.history
+        });
+        if(index === 0){
+            boardObj.isEmpty = true;
+        }
+        boardObj.matrix = this.history[index].board;
+    }
+
+    nextOnClickHandler(){
+    let index = this.state.statistics.turnsSoFar + 1;
+        if(this.history.length <= index ){
+            alert("no more next ya dush!");
+        }
+        else{
+            this.setState({ dominoTiles: this.history[index].dominoTiles,
+                playerTiles: this.history[index].playerTiles,
+                boardTiles: this.history[index].boardTiles,
+                board: this.history[index].board,
+                statistics: this.history[index].statistics,
+                });
+            boardObj.matrix = this.history[index].board;  
+        }
+
+        if(index === 1){
+            boardObj.isEmpty = false;
+        }
+    }
+
+    
+    render(){
+        let buttonClass;      
+        if(this.endGame === true){
+            buttonClass = " ";
+        }
+        else{
+            buttonClass = "hidden";
+        }
         return (
             <div className="game"> 
                 <Deck onClick={() => this.pullFromDeck()
-                }/>
-                <Player playerTiles={this.state.playerTiles} dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
-                <Board  boardTiles={this.state.boardTiles} possibleMoves={boardObj.possibleMoves} possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
+                } prevOnClickHandler={this.prevOnClickHandler.bind(this)} 
+                nextOnClickHandler={this.nextOnClickHandler.bind(this)}
+                 buttonClass={buttonClass}/>
+                <Board  boardTiles={this.state.boardTiles} 
+                possibleMoves={boardObj.possibleMoves} 
+                possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
                 <Statistics statistics = {this.state.statistics}/>
+                <Player playerTiles={this.state.playerTiles} 
+                dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
             </div>
         );
     }
