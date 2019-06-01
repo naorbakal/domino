@@ -321,19 +321,20 @@ class Game extends React.Component {
             buttonClass = "hidden";
         }
         return (
-            <div className="game"> 
+                <div className="game"> 
                 <Deck onClick={() => this.pullFromDeck()
                 } prevOnClickHandler={this.prevOnClickHandler.bind(this)} 
                 nextOnClickHandler={this.nextOnClickHandler.bind(this)}
                  buttonClass={buttonClass}/>
+                     <Player playerTiles={this.state.playerTiles} 
+                    dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
                 <Board  boardTiles={this.state.boardTiles} 
                 possibleMoves={boardObj.possibleMoves} 
                 possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
                 <Statistics statistics = {this.state.statistics}/>
-                <Player playerTiles={this.state.playerTiles} 
-                dominoTileOnClickHandler = {this.dominoTileOnClickHandler.bind(this)}/>
+            
             </div>
-        );
+        )
     }
 }
 
