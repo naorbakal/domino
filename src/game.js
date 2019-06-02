@@ -195,12 +195,26 @@ class Game extends React.Component {
         boardObj.possibleMoves.length=0;
         selectedTile.selected = false;
         selectedTile.position.top = selectedPossibleMove.position.top;
-        selectedTile.position.left =selectedPossibleMove.position.left;
+        selectedTile.position.left = selectedPossibleMove.position.left;
         selectedTile.angle = selectedPossibleMove.angle;
         selectedTile.location = "board";
         game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
         game.boardTiles.push(selectedTile);
         boardObj.updateBoard(selectedTile,{row: selectedPossibleMove.row,col: selectedPossibleMove.col});
+        /*
+        if(selectedPossibleMove.direction === "bottom"){
+            boardObj.moveAllDown();
+            for(let i=0; i<game.boardTiles.length; i++){
+            game.boardTiles[i].position.top +=10;
+            }
+        }
+        else if(selectedPossibleMove.direction === "right"){
+            boardObj.moveAllRight();
+            for(let i=0; i<game.boardTiles.length; i++){
+                game.boardTiles[i].position.left + 5;
+                }
+        }
+        */
         game.board = boardObj.matrix;
         this.updateStatistics(game);
         

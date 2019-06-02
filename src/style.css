@@ -1,3 +1,9 @@
+@media  (max-width: 1024px) and (max-height: 768px){
+    .board{       
+        zoom: 80%; 
+    }
+}
+
 html,body{
     background-image: url(./gameBackground.jpg);
     margin: 0;
@@ -111,6 +117,7 @@ h1{
         position: relative;
         background-color: rgba(255, 255, 255, 0.212);
         overflow: scroll;
+        overscroll-behavior-y: contain;
         flex: 8;
 }
 	
@@ -125,7 +132,7 @@ h1{
 
 .dominoTile {
     background-color: rgb(255, 255, 255);
-    font-size: 12px;
+    font-size: 10px;
     width: 3em;
     height: 6em;
     margin: 5px;
@@ -140,7 +147,7 @@ h1{
 
 .possibleMove {
     background-color: rgba(43, 255, 0, 0.308);
-    font-size: 12px;
+    font-size: 10px;
     width: 3em;
     height: 6em;
     margin: 5px;
@@ -154,9 +161,9 @@ h1{
     -moz-border-radius: 10px;
     border-radius: 10px;
     background-color: rgba(43, 255, 0, 0.5);
- -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 255, 0, 0.67);
--moz-box-shadow:    0px 0px 30px 0px rgba(0, 255, 0, 0.67);
-box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+    -webkit-box-shadow: 0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+    -moz-box-shadow:    0px 0px 30px 0px rgba(0, 255, 0, 0.67);
+    box-shadow:         0px 0px 30px 0px rgba(0, 255, 0, 0.67);
 }
 
 .player .dominoTile{

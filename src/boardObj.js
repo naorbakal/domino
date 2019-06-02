@@ -8,7 +8,7 @@ class BoardObj{
             this.startPos = {
                 angle: "horizontal270",
                 top: 40,
-                left:45
+                left :45
             }
             this.isEmpty = true;
     }
@@ -33,36 +33,37 @@ class BoardObj{
                 if(this.matrix[i][j].accessible === true && this.matrix[i][j].isOccupied === false){
                     if(selectedTile.values.top === this.matrix[i][j].possibleInserts.top){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
-                        this.possibleMoves.push({angle: angle, col:j, row:i,position:this.calculateOnBoardPosition(i,j,"top",selectedTile.isDouble)});                     
+                        this.possibleMoves.push({angle: angle, col:j, row:i,
+                             direction:"top" ,position:this.calculateOnBoardPosition(i,j,"top",selectedTile.isDouble)});                     
                     }
                     else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.bottom){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "vertical";
-                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});      
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction: "bottom", position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});      
                     }
                     else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.right){
                         angle = selectedTile.isDouble === true ? "vertical" : "horizontal90";
-                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"right",selectedTile.isDouble)});
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction:"right", position: this.calculateOnBoardPosition(i,j,"right",selectedTile.isDouble)});
                     }
                     else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.left){
                         angle = selectedTile.isDouble === true ? "vertical" : "horizontal90";
-                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction:"left", position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});
                     }
                     else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.left){
                         angle = selectedTile.isDouble === true ? "vertical" : "horizontal270";                      
-                            this.possibleMoves.push({angle: angle, col:j, row:i,position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});   
+                            this.possibleMoves.push({angle: angle, col:j, row:i,direction: "left", position: this.calculateOnBoardPosition(i,j,"left", selectedTile.isDouble)});   
                     }
                     else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.right){
                         angle = selectedTile.isDouble === true ? "vertical" : "horizontal270";
-                        this.possibleMoves.push({angle: angle, col:j, row:i,position: this.calculateOnBoardPosition(i,j,"right", selectedTile.isDouble)});   
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction: "right",position: this.calculateOnBoardPosition(i,j,"right", selectedTile.isDouble)});   
                     }
 
                     else if(selectedTile.values.top === this.matrix[i][j].possibleInserts.bottom){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "upsideDown";
-                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});                       
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction:"bottom", position: this.calculateOnBoardPosition(i,j,"bottom",selectedTile.isDouble)});                       
                     }
                     else if(selectedTile.values.bottom === this.matrix[i][j].possibleInserts.top){
                         angle = selectedTile.isDouble === true ? "horizontal90" : "upsideDown";
-                        this.possibleMoves.push({angle: angle, col:j, row:i, position: this.calculateOnBoardPosition(i,j,"top", selectedTile.isDouble)});                       
+                        this.possibleMoves.push({angle: angle, col:j, row:i, direction:"top", position: this.calculateOnBoardPosition(i,j,"top", selectedTile.isDouble)});                       
                     }
                 
                 }
@@ -75,6 +76,7 @@ class BoardObj{
         if (direction === "top" &&
          (this.matrix[row-1][col].dominoTile.angle === "horizontal90" ||
          this.matrix[row-1][col].dominoTile.angle === "horizontal270")){
+           
             top = this.matrix[row-1][col].dominoTile.position.top + 13;
             if(isDouble === false){
                
@@ -132,6 +134,7 @@ class BoardObj{
             else{
                 top = this.matrix[row-1][col].dominoTile.position.top + 14;
             }
+  
         }
         else if(direction === "bottom"){
             //good
@@ -165,6 +168,26 @@ class BoardObj{
         }
 
         return {top:top, left:left};
+    }
+
+    moveAllDown(){
+        for (var i=0;i<this.height;i++){    
+            for (var j=0; j<this.width; j++){
+                if(this.matrix[i][j].isOccupied === true){
+                    this.matrix[i][j].dominoTile.position.top += 5;
+                }
+            }
+        }
+    }
+
+    moveAllRight(){
+        for (var i=0;i<this.height;i++){    
+            for (var j=0; j<this.width; j++){
+                if(this.matrix[i][j].isOccupied === true){
+                    this.matrix[i][j].dominoTile.position.left += 10;
+                }
+            }
+        }
     }
 
     updateBoard(selectedTile, cell){
