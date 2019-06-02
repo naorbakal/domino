@@ -8,6 +8,7 @@ import Board from './board';
 import Statistics from './statistics';
 import DominoTileObj from "./dominoTileTObj";
 import {boardObj} from "./boardObj";
+import Clock from './clock';
 
 class Game extends React.Component {
     constructor(props){
@@ -27,6 +28,7 @@ class Game extends React.Component {
         this.gameStartingTime;
         this.history = new Array();
         this.endGame = false;
+        this.newGame = true;
     }
 
     componentDidMount(){
@@ -35,8 +37,12 @@ class Game extends React.Component {
         this.needDraw = false;
         this.gameStartingTime = Date.now();
         let score = this.getPlayerScore(playerTiles);
+        boardObj.initBoard();
+        this.endGame = false;
+        this.history = new Array();
         this.setState({dominoTiles: dominoTiles,
                        playerTiles: playerTiles,
+                       boardTiles: new Array(),
                        statistics:{
                         turnsSoFar: 0,
                         averagePlayTime: 0,
@@ -61,13 +67,13 @@ class Game extends React.Component {
                 this.endGame = true;
                 alert("you loose");
                 this.history.push(game);
-
             }
         }
 
     }
 
     startNewGame(){
+        this.newGame = true;
         this.componentDidMount();
     }
 
@@ -141,6 +147,7 @@ class Game extends React.Component {
             let newTile = this.chooseRandomTile(game.dominoTiles);
             game.playerTiles.push(newTile);
             this.updateStatistics(game,true);
+            this.checkIfPlayerWinOrLoose(game);
             this.setState(game);
         }
         else{
@@ -168,7 +175,6 @@ class Game extends React.Component {
         else{
             boardObj.getPossibleMoves(selectedTile);
             if(boardObj.possibleMoves.length === 0){
-                console.log("red");
                 this.highlightDomino(game, selectedTileValues ,"redHighlight"); 
 
             }
@@ -205,14 +211,14 @@ class Game extends React.Component {
         this.history.push(this.state);
         let selectedTile = this.findSelectedTile(game);
 
-        if(selectedPossibleMove.position.top < 0){
+        if(selectedPossibleMove.position.top < 8){
             selectedPossibleMove.position.top +=20;
             boardObj.moveAllDown();
             game.boardTiles.forEach((boardTile) => {
                 boardTile.position.top += 20;
             });
         }
-        if(selectedPossibleMove.position.left < 0){
+        if(selectedPossibleMove.position.left < 8){
             selectedPossibleMove.position.left +=20;
             boardObj.moveAllRight();
             game.boardTiles.forEach((boardTile) => {
@@ -282,6 +288,7 @@ class Game extends React.Component {
     
 
     firstTurn(game, selectedTile){
+        this.newGame=false;
         this.history.push(this.state);
         let boardPosition = {row:28, col:28, tile:selectedTile};
         selectedTile.position.top = boardObj.startPos.top;
@@ -300,7 +307,6 @@ class Game extends React.Component {
             if(element.values.top === selectedDominoTile.top &&
                element.values.bottom === selectedDominoTile.bottom){
                 element.selected = highlightColor;
-                console.log(element.selected);
             }
             else{
                 element.selected = "";
@@ -314,6 +320,7 @@ class Game extends React.Component {
             alert("You can't go back");
         }
         else{
+            console.log(this.history);
             this.setState({ dominoTiles: this.history[index].dominoTiles,
                 playerTiles: this.history[index].playerTiles,
                 boardTiles: this.history[index].boardTiles,
@@ -329,7 +336,6 @@ class Game extends React.Component {
     }
         
     prevOnClickHandler(){
-        console.log("prev"); 
         let index = this.state.statistics.turnsSoFar -1;
         if(index < 0){
             alert("You can't go back");
@@ -360,13 +366,7 @@ class Game extends React.Component {
 
     
     render(){
-        let buttonClass;      
-        if(this.endGame === true){
-            buttonClass = " ";
-        }
-        else{
-            buttonClass = "hidden";
-        }
+  
         return (
             <div className="game">
                 <div className="firstRow">
@@ -375,11 +375,11 @@ class Game extends React.Component {
                      prevOnClickHandler={this.endGame === false ?
                      this.undoOnClickHandler.bind(this) : this.prevOnClickHandler.bind(this)} 
                      nextOnClickHandler={this.nextOnClickHandler.bind(this)}
-                     buttonClass={buttonClass}/>
+                     endGame={this.endGame}/>
                     <Board  boardTiles={this.state.boardTiles} 
                         possibleMoves={boardObj.possibleMoves} 
                         possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
-                    <Statistics statistics = {this.state.statistics}/>
+                    <Statistics statistics = {this.state.statistics} initClock={this.newGame}/>
                     </div> 
                 <div className="secondRow">
                 <Player playerTiles={this.state.playerTiles} 

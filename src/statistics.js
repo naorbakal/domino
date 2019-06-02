@@ -4,10 +4,9 @@ import style from "./style.css";
 import Clock from "./clock.js";
 
 function Statistics (props){
-
         return(
         <div className="panel stat">
-            <Clock />            
+            <Clock init={props.initClock} />            
             <div className="statLabel"> Turns So Far
                 <p>{props.statistics.turnsSoFar}</p>
             </div>    

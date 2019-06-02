@@ -167,15 +167,24 @@ h1{
     position: absolute;
 }
 
-.newGame {
-    color: #fff !important;
-    text-transform: uppercase;
-    background: #ed3330;
-    padding: 20px;
-    border-radius: 5px;
-    display: inline-block;
-    border: none;
+.newGame{
+display: inline-block;
+padding:0.3em 1.2em;
+margin:0 0.3em 0.3em 0;
+border-radius:2em;
+box-sizing: border-box;
+text-decoration:none;
+font-family:'Roboto',sans-serif;
+font-weight:300;
+color:rgb(10, 10, 10);
+background-color:#4ef15c;
+text-align:center;
+transition: all 0.2s;
     }
+
+ .newGame:hover{
+    background-color:#40c652;
+    }  
 
 .possibleMove:hover{
     -webkit-border-radius: 10px;

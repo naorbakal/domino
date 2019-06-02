@@ -190,6 +190,12 @@ class BoardObj{
         }
     }
 
+    initBoard(){
+        this.matrix = this.createMatrix();
+        this.possibleMoves = new Array();
+        this.isEmpty = true;
+    }
+
     updateBoard(selectedTile, cell){
 
         if(selectedTile.angle === "vertical" || selectedTile.angle === "upsideDown"){
