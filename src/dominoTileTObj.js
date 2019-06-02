@@ -2,7 +2,7 @@
 class DominoTileObj{
     constructor(top, bottom){ 
         this.angle="vertical",
-        this.selected = false;
+        this.selected =false;
         this.position={
             top:null,
             left:null

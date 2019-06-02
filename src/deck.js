@@ -11,7 +11,8 @@ function Deck(props) {
             <div className="arrow-left" onClick={()=>props.prevOnClickHandler()}></div>          
             <button className="dominoTile " onClick= {props.onClick}>   
             </button> 
-            <div className={props.buttonClass +"arrow-right"} onClick={()=>props.nextOnClickHandler()}></div>          
+            <div className={props.buttonClass +" arrow-right"} onClick={()=>props.nextOnClickHandler()}></div>  
+            <button className={props.buttonClass + " startNewGame"} onClick={()=>props.newGameOnClickHandler()}></button>         
         </div>
     )
 }    

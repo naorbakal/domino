@@ -162,8 +162,15 @@ class Game extends React.Component {
             boardObj.isEmpty = false;
         }
         else{
-            this.highlightDomino(game, selectedTileValues); 
             boardObj.getPossibleMoves(selectedTile);
+            if(boardObj.possibleMoves.length === 0){
+                console.log("red");
+                this.highlightDomino(game, selectedTileValues ,"redHighlight"); 
+
+            }
+            else{
+                this.highlightDomino(game, selectedTileValues, "greenHighlight"); 
+            }
         }
 
         this.setState(game);
@@ -194,6 +201,20 @@ class Game extends React.Component {
         this.history.push(this.state);
         let selectedTile = this.findSelectedTile(game);
 
+        if(selectedPossibleMove.position.top < 0){
+            selectedPossibleMove.position.top +=20;
+            boardObj.moveAllDown();
+            game.boardTiles.forEach((boardTile) => {
+                boardTile.position.top += 20;
+            });
+        }
+        if(selectedPossibleMove.position.left < 0){
+            selectedPossibleMove.position.left +=20;
+            boardObj.moveAllRight();
+            game.boardTiles.forEach((boardTile) => {
+                boardTile.position.left += 20;
+            });
+        }
         boardObj.possibleMoves.length=0;
         selectedTile.selected = false;
         selectedTile.position.top = selectedPossibleMove.position.top;
@@ -235,7 +256,7 @@ class Game extends React.Component {
     findSelectedTile(game){
         let res;
         game.playerTiles.forEach(element => {
-            if(element.selected === true){
+            if(element.selected !== ""){
                 res = element;
             }
             });
@@ -270,14 +291,15 @@ class Game extends React.Component {
         this.updateStatistics(game);   
     }
 
-    highlightDomino(game, selectedDominoTile){
+    highlightDomino(game, selectedDominoTile, highlightColor){
         game.playerTiles.forEach(element => {
             if(element.values.top === selectedDominoTile.top &&
                element.values.bottom === selectedDominoTile.bottom){
-                element.selected = true;
+                element.selected = highlightColor;
+                console.log(element.selected);
             }
             else{
-                element.selected = false;
+                element.selected = "";
             }            
         });
     }

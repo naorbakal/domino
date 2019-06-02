@@ -26,8 +26,17 @@ header {
 h1{
     margin-top: 0;
 }
-.selected{
-    box-shadow: 10px -7px 15px lightgreen  , darkgray 0px 0px 3px inset !important;
+.redHighlight{
+    box-shadow: 10px -7px 15px red  , darkgray 0px 0px 3px inset !important;
+    -webkit-transform:translate(0px,-10px) !important ;
+    -moz-transform:translate(0px,-10px) !important;
+    -ms-transform:translate(0px,-10px) !important;
+    -o-transform:translate(0px,-10px) !important;
+    transform:translate(0px,-10px) !important;
+}
+
+.greenHighlight{
+    box-shadow: 10px -7px 15px rgb(33, 167, 16)  , darkgray 0px 0px 3px inset !important;
     -webkit-transform:translate(0px,-10px) !important ;
     -moz-transform:translate(0px,-10px) !important;
     -ms-transform:translate(0px,-10px) !important;
@@ -126,7 +135,8 @@ h1{
 }
 
 .hidden{
-    display: none;
+    display: none !important;
+    
 }
 
 
@@ -155,6 +165,16 @@ h1{
     border-radius: .8em;
     position: absolute;
 }
+
+.newGame {
+    color: #fff !important;
+    text-transform: uppercase;
+    background: #ed3330;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    }
 
 .possibleMove:hover{
     -webkit-border-radius: 10px;

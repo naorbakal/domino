@@ -27,10 +27,8 @@ class DominoTile extends React.Component {
     }
 
     getClassNames(){
-        let classNames = "dominoTile";
-        if(this.props.tile.selected === true){
-            classNames += " selected";
-        }
+        let classNames = "dominoTile ";
+        classNames += this.props.tile.selected;
         if(this.props.tile.endGame === true){
             classNames += " endGame"
         }
@@ -59,7 +57,7 @@ class DominoTile extends React.Component {
         return (
             <div 
                 className={this.getClassNames()}
-                onClick={()=>{this.props.onClickHandler(this.props.tile.values)}}
+                onClick={this.props.onClickHandler === null? null:()=>{this.props.onClickHandler(this.props.tile.values)}}
                 style={this.style}
                 >
                 <span className="line" />
