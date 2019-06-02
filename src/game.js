@@ -59,12 +59,16 @@ class Game extends React.Component {
             let deck = game.dominoTiles.filter((tile)=>{return this.checkTileLocation(tile,"deck")});
             if(deck.length === 0 && this.needDraw === true){
                 this.endGame = true;
-                alert("you lose");
+                alert("you loose");
                 this.history.push(game);
 
             }
         }
 
+    }
+
+    startNewGame(){
+        this.componentDidMount();
     }
 
     getPlayerScore(playerTiles){
@@ -336,7 +340,6 @@ class Game extends React.Component {
     render(){
         let buttonClass;      
         if(this.endGame === true){
-            console.log("entered")
             buttonClass = " ";
         }
         else{
@@ -345,7 +348,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="firstRow">
-                    <Deck onClick={() => this.pullFromDeck()
+                    <Deck startNewGame={this.startNewGame.bind(this)} onClick={() => this.pullFromDeck()
                      } 
                      prevOnClickHandler={this.endGame === false ?
                      this.undoOnClickHandler.bind(this) : this.prevOnClickHandler.bind(this)} 
