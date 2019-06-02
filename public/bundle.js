@@ -35628,10 +35628,15 @@ function (_React$Component) {
 
         if (deck.length === 0 && this.needDraw === true) {
           this.endGame = true;
-          alert("you lose");
+          alert("you loose");
           this.history.push(game);
         }
       }
+    }
+  }, {
+    key: "startNewGame",
+    value: function startNewGame() {
+      this.componentDidMount();
     }
   }, {
     key: "getPlayerScore",
@@ -35973,7 +35978,6 @@ function (_React$Component) {
       var buttonClass;
 
       if (this.endGame === true) {
-        console.log("entered");
         buttonClass = " ";
       } else {
         buttonClass = "hidden";
@@ -35984,6 +35988,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "firstRow"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_deck__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        startNewGame: this.startNewGame.bind(this),
         onClick: function onClick() {
           return _this7.pullFromDeck();
         },

@@ -5,6 +5,7 @@ import DominoTile from "./dominoTile"
 import PossibleMoveTile from "./possibleMoveTile"
 
 function Board(props){
+
     const listItems = props.boardTiles.map((tile)=>{
         return <DominoTile
          key={tile.values.top.toString() + tile.values.bottom.toString()}
