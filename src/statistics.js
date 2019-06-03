@@ -6,7 +6,7 @@ import Clock from "./clock.js";
 function Statistics (props){
         return(
         <div className="panel stat">
-            <Clock init={props.initClock} />            
+            <Clock init={props.initClock} pause={props.pauseClock} />            
             <div className="statLabel"> Turns So Far
                 <p>{props.statistics.turnsSoFar}</p>
             </div>    

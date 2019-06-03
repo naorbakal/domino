@@ -3,7 +3,7 @@ class BoardObj{
         constructor(){
             this.height = 56;
             this.width = 56;
-            this.matrix = this.createMatrix();
+            this.matrix;// = this.createMatrix();
             this.possibleMoves = new Array();
             this.startPos = {
                 angle: "horizontal270",
@@ -11,19 +11,19 @@ class BoardObj{
                 left :45
             }
             this.isEmpty = true;
+
+            this.createMatrix();
     }
 
     createMatrix(){
-        let matrix = new Array(this.width);
+        this.matrix = new Array(this.width);
         
         for(let i=0; i<this.width; i++){
-            matrix[i] = new Array (this.height);
+            this.matrix[i] = new Array(this.height);
             for(let j=0; j<this.height; j++){
-                matrix[i][j] = new Cell();       
+                this.matrix[i][j] = new Cell();       
             }
         }
-
-        return matrix;
     }
     getPossibleMoves(selectedTile){
         this.possibleMoves = new Array();
@@ -191,7 +191,7 @@ class BoardObj{
     }
 
     initBoard(){
-        this.matrix = this.createMatrix();
+        this.createMatrix();
         this.possibleMoves = new Array();
         this.isEmpty = true;
     }
@@ -255,7 +255,7 @@ class Cell{
             top:null,
             bottom:null
         }
-        this.dominoTile;
+        this.dominoTile = null;
     }
 }
 

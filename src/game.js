@@ -57,7 +57,8 @@ class Game extends React.Component {
     }
 
     startNewGame(){
-        this.newGame = true;
+        //this.newGame = true;
+
         let dominoTiles = this.createTiles();
         let playerTiles = this.chooseStartingTiles(dominoTiles);
         this.needDraw = false;
@@ -65,9 +66,12 @@ class Game extends React.Component {
         let score = this.getPlayerScore(playerTiles);
         boardObj.initBoard();
         this.endGame = false;
+        this.newGame = false;
+        this.history = new Array();
         this.setState({dominoTiles: dominoTiles,
                        playerTiles: playerTiles,
                        boardTiles: new Array(),
+                       board: this.deepCopy(boardObj.matrix),
                        statistics:{
                         turnsSoFar: 0,
                         averagePlayTime: 0,
@@ -276,7 +280,7 @@ class Game extends React.Component {
     
 
     firstTurn(game, selectedTile){
-        this.newGame=false;
+        game.boardTiles = new Array();
         this.history.push(this.state);
         let boardPosition = {row:28, col:28, tile:selectedTile};
         selectedTile.position.top = boardObj.startPos.top;
@@ -308,6 +312,12 @@ class Game extends React.Component {
             alert("You can't go back");
         }
         else{
+
+            if(index === 0){
+                boardObj.isEmpty = true;
+            }
+
+            boardObj.matrix = this.deepCopy(this.history[index].board);
             this.setState({ dominoTiles: this.history[index].dominoTiles,
                 playerTiles: this.history[index].playerTiles,
                 boardTiles: this.history[index].boardTiles,
@@ -315,11 +325,8 @@ class Game extends React.Component {
                 statistics: this.history[index].statistics,
             });
 
-            if(index === 0){
-                boardObj.isEmpty = true;
-            }
-            boardObj.matrix = this.deepCopy(this.history[index].board);
             this.history.pop();
+        
         }     
     }
         
@@ -367,7 +374,7 @@ class Game extends React.Component {
                     <Board  boardTiles={this.state.boardTiles} 
                         possibleMoves={boardObj.possibleMoves} 
                         possibleMoveOnClickHandler = {this.possibleMoveClickHandler.bind(this)}/>
-                    <Statistics statistics = {this.state.statistics} initClock={this.newGame}/>
+                    <Statistics statistics = {this.state.statistics} initClock={this.newGame} pauseClock ={this.endGame}/>
                     </div> 
                 <div className="secondRow">
                 <Player playerTiles={this.state.playerTiles} 
