@@ -32,23 +32,7 @@ class Game extends React.Component {
     }
 
     componentDidMount(){
-        let dominoTiles = this.createTiles();
-        let playerTiles = this.chooseStartingTiles(dominoTiles);
-        this.needDraw = false;
-        this.gameStartingTime = Date.now();
-        let score = this.getPlayerScore(playerTiles);
-        boardObj.initBoard();
-        this.endGame = false;
-        this.history = new Array();
-        this.setState({dominoTiles: dominoTiles,
-                       playerTiles: playerTiles,
-                       boardTiles: new Array(),
-                       statistics:{
-                        turnsSoFar: 0,
-                        averagePlayTime: 0,
-                        withdrawals: 0,
-                        score : score}                      
-        });
+        this.startNewGame();
     }
 
     componentDidUpdate(){
@@ -74,7 +58,22 @@ class Game extends React.Component {
 
     startNewGame(){
         this.newGame = true;
-        this.componentDidMount();
+        let dominoTiles = this.createTiles();
+        let playerTiles = this.chooseStartingTiles(dominoTiles);
+        this.needDraw = false;
+        this.gameStartingTime = Date.now();
+        let score = this.getPlayerScore(playerTiles);
+        boardObj.initBoard();
+        this.endGame = false;
+        this.setState({dominoTiles: dominoTiles,
+                       playerTiles: playerTiles,
+                       boardTiles: new Array(),
+                       statistics:{
+                        turnsSoFar: 0,
+                        averagePlayTime: 0,
+                        withdrawals: 0,
+                        score : score}                      
+        });
     }
 
     getPlayerScore(playerTiles){
@@ -165,6 +164,7 @@ class Game extends React.Component {
     }
 
     dominoTileOnClickHandler(selectedTileValues){
+        if(this.endGame === false){
         let game = this.deepCopy(this.state);
         let selectedTile = this.findTile(game,selectedTileValues);
 
@@ -184,6 +184,7 @@ class Game extends React.Component {
         }
 
         this.setState(game);
+    }
         
     }
 
@@ -234,20 +235,7 @@ class Game extends React.Component {
         game.playerTiles = game.playerTiles.filter((tile)=>{return this.checkTileLocation(tile,"player")});
         game.boardTiles.push(selectedTile);
         boardObj.updateBoard(selectedTile,{row: selectedPossibleMove.row,col: selectedPossibleMove.col});
-        /*
-        if(selectedPossibleMove.direction === "bottom"){
-            boardObj.moveAllDown();
-            for(let i=0; i<game.boardTiles.length; i++){
-            game.boardTiles[i].position.top +=10;
-            }
-        }
-        else if(selectedPossibleMove.direction === "right"){
-            boardObj.moveAllRight();
-            for(let i=0; i<game.boardTiles.length; i++){
-                game.boardTiles[i].position.left + 5;
-                }
-        }
-        */
+
         game.board = boardObj.matrix;
         this.updateStatistics(game);
         
@@ -320,13 +308,13 @@ class Game extends React.Component {
             alert("You can't go back");
         }
         else{
-            console.log(this.history);
             this.setState({ dominoTiles: this.history[index].dominoTiles,
                 playerTiles: this.history[index].playerTiles,
                 boardTiles: this.history[index].boardTiles,
                 board: this.history[index].board,
                 statistics: this.history[index].statistics,
             });
+
             if(index === 0){
                 boardObj.isEmpty = true;
             }

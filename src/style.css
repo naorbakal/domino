@@ -2,6 +2,9 @@
     .board{       
         zoom: 80%; 
     }
+    .player{
+        zoom: 80%; 
+    }
 }
 
 html,body{
