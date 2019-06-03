@@ -320,7 +320,7 @@ class Game extends React.Component {
                 statistics: this.history[index].statistics,
             });
     }
-}
+    }
     nextOnClickHandler(){
         let index = this.state.statistics.turnsSoFar + 1;
         if(this.history.length <= index ){
