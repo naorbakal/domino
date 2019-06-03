@@ -10,6 +10,15 @@ class Clock extends React.Component{
         setInterval(()=>{this.moveClock()},1000);
     }
 
+    componentWillReceiveProps(){
+        console.log(this.props.init);
+        if(this.props.init === true){
+        let clockCopy = JSON.parse(JSON.stringify(this.state));
+        clockCopy={minutes:{left:0,right:0},seconds:{left:0,right:0}};
+        this.setState(clockCopy);
+    }
+    }
+
     moveClock(){
         let clockCopy = JSON.parse(JSON.stringify(this.state));
 

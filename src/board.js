@@ -11,7 +11,7 @@ function Board(props){
          key={tile.values.top.toString() + tile.values.bottom.toString()}
          selected={tile.selected}
          tile={tile}
-         onClickHandler={props.dominoTileOnClickHandler}
+         onClickHandler={null}
          class = "dominoTile"
          />
     });

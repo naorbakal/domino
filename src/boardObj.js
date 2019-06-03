@@ -171,10 +171,10 @@ class BoardObj{
     }
 
     moveAllDown(){
-        for (var i=0;i<this.height;i++){    
+        for (var i=0;i<this.height;i++){   
             for (var j=0; j<this.width; j++){
                 if(this.matrix[i][j].isOccupied === true){
-                    this.matrix[i][j].dominoTile.position.top += 5;
+                    this.matrix[i][j].dominoTile.position.top += 20;
                 }
             }
         }
@@ -184,10 +184,16 @@ class BoardObj{
         for (var i=0;i<this.height;i++){    
             for (var j=0; j<this.width; j++){
                 if(this.matrix[i][j].isOccupied === true){
-                    this.matrix[i][j].dominoTile.position.left += 10;
+                    this.matrix[i][j].dominoTile.position.left += 20;
                 }
             }
         }
+    }
+
+    initBoard(){
+        this.matrix = this.createMatrix();
+        this.possibleMoves = new Array();
+        this.isEmpty = true;
     }
 
     updateBoard(selectedTile, cell){
